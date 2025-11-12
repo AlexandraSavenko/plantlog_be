@@ -2,12 +2,11 @@
   "name": "plantlog_be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index",
-    "dev": "nodemon src/index"
+    "build": "tsc",
+    "start": "node dist/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -22,9 +21,18 @@
   "homepage": "https://github.com/AlexandraSavenko/plantlog_be#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3",
+    "pino-http": "^11.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.0",
+    "nodemon": "^3.1.11",
+    "pino-pretty": "^13.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
