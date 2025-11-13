@@ -1,7 +1,8 @@
 import "dotenv/config";
 
 
-export const env = (name: string, defaultValue: number) => {
+
+export const env = (name: string, defaultValue?: number) => {
     const value = process.env[name];
     if(value) return value;
     if(defaultValue) return defaultValue;

@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from 'cors';
 import { env } from "./utils/env";
+import PlantCollection from "./db/models/Plant";
 // import pino from 'pino';
 
 const port = Number(env("PORT", 3000))
@@ -13,9 +14,12 @@ app.use(cors())
 // }
 // });
 // // app.use(logger);
-app.get("/", (req, res) => {
-    res.json({
-        message: "Plantlog the best"
+app.get("/plants", async (req, res) => {
+    const data = await PlantCollection.find()
+    res.status(200).json({
+        status: 200,
+        message: "Plantlog the best",
+        data
     })
 })
 
