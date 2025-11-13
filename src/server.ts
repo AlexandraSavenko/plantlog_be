@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from 'cors';
 import { env } from "./utils/env";
-import PlantCollection from "./db/models/Plant";
+import * as plantsServises from "./services/plants"
 // import pino from 'pino';
 
 const port = Number(env("PORT", 3000))
@@ -15,10 +15,27 @@ app.use(cors())
 // });
 // // app.use(logger);
 app.get("/plants", async (req, res) => {
-    const data = await PlantCollection.find()
+    const data = await plantsServises.getPlants()
     res.status(200).json({
         status: 200,
         message: "Plantlog the best",
+        data
+    })
+})
+
+app.get("/plants/:id", async (req, res) => {
+    const {id} = req.params;
+
+    const data = await plantsServises.getPlantById(id);
+    if(!data){
+        return res.status(404).json({
+            status: 404,
+            message: `Plant with id: ${id} is not found`
+        })
+    }
+    res.status(200).json({
+        status: 200,
+        message: `Plant with id: ${id} is here`,
         data
     })
 })
