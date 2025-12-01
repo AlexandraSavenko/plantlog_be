@@ -1,0 +1,1 @@
+export const plantsTypelist = ["tree", "bush", "grass"]

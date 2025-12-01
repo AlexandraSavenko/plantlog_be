@@ -15,9 +15,16 @@ app.use((req, res) => res.status(404).json({
     message: `${req.url} not found`
 }))
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).json({
-        message: error.message
+interface ApiError extends Error {
+    status?: number;
+    message: string;
+}
+app.use((error: ApiError, req: Request, res: Response, next: NextFunction) => {
+    const status = error.status ?? 500;
+    const message = error.message ?? "Server error"
+    res.status(status).json({
+        status,
+        message
     })
 })
 

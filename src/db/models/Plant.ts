@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { plantsTypelist } from "../../constants/plants";
 
 const plantSchema = new Schema({
     name: {
@@ -12,7 +13,13 @@ const plantSchema = new Schema({
     photo: {
         type: String,
         required: true,
-    }
+    },
+    plantType: {
+        type: String,
+        enum: plantsTypelist,
+        required: true,
+        default: "tree"
+    },
 });
 
 const PlantCollection = model("plants", plantSchema);

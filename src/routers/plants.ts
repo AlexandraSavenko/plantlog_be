@@ -1,34 +1,15 @@
-import * as plantsServises from "../services/plants";
 import {Router} from "express";
+import * as plantsControllers from "../controllers/plants"
+import ctrlWrapper from "../utils/ctrlWrapper";
 
-//Router is an empty object
+//!Router is an empty object that saves routes
+// console.log("object plantRouter looks like this:", plantsRouter.stack[1].route)
+//controller is a handler functions as a second argument after a route. 
 const plantsRouter = Router()
 
 
-plantsRouter.get("/", async (req, res) => {
-    const data = await plantsServises.getPlants()
-    res.status(200).json({
-        status: 200,
-        message: "Plantlog the best",
-        data
-    })
-})
+plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
-plantsRouter.get("/:id", async (req, res) => {
-    const {id} = req.params;
-
-    const data = await plantsServises.getPlantById(id);
-    if(!data){
-        return res.status(404).json({
-            status: 404,
-            message: `Plant with id: ${id} is not found`
-        })
-    }
-    res.status(200).json({
-        status: 200,
-        message: `Plant with id: ${id} is here`,
-        data
-    })
-})
+plantsRouter.get("/:id", ctrlWrapper(plantsControllers.getPlantByIdController))
 
 export default plantsRouter;
