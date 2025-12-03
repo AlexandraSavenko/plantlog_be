@@ -25,3 +25,23 @@ export const getPlantByIdController = async (req: Request, res: Response) => {
     data,
   });
 };
+
+//req.body don't have json automaticlly because express can't read it(it sees binary code only) so in server we call a function that converts req.body to json
+export const addPlantController = async (req: Request, res: Response) => {
+  const data = await plantsServises.addPlant(req.body)
+  res.status(201).json({
+    status: 201,
+    message: "Success",
+    data
+  })
+}
+
+export const upsertPlantController = async (req: Request, res: Response) => {
+  const {id:_id} = req.params;
+  const data = await plantsServises.upsertPlant({_id, payload: req.body})
+res.status(200).json({
+  status: 200,
+  message: "Plant has been updated",
+  data
+})
+}

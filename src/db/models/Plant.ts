@@ -20,7 +20,7 @@ const plantSchema = new Schema({
         required: true,
         default: "tree"
     },
-});
+}, {versionKey: false, timestamps: true});
 
 const PlantCollection = model("plants", plantSchema);
 
