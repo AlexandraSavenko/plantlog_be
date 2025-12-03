@@ -13,5 +13,5 @@ export interface upsertPlantParams {
     photo?: string;
     plantType?: "tree" | "bush" | "grass";
   };
-  options?: {};
+  options?: {upsert?: boolean};
 }

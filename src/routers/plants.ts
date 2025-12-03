@@ -16,4 +16,8 @@ plantsRouter.post("/", ctrlWrapper(plantsControllers.addPlantController))
 
 plantsRouter.put("/:id", ctrlWrapper(plantsControllers.upsertPlantController))
 
+plantsRouter.patch("/:id", ctrlWrapper(plantsControllers.patchPlantController))
+
+plantsRouter.delete("/:id", ctrlWrapper(plantsControllers.deletePlantController))
+
 export default plantsRouter;
