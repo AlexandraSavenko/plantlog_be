@@ -1,1 +1,1 @@
-export const plantsTypelist = ["tree", "bush", "grass"]
+export const plantsTypelist = ["tree", "bush", "grass"] as const;
