@@ -3,6 +3,7 @@ import * as plantsControllers from "../controllers/plants"
 import ctrlWrapper from "../utils/ctrlWrapper";
 import { plantAddSchema, plantUpdateSchema } from "../validation/plants";
 import validateBody from "../utils/validateBody";
+import isValidId from "../middlewares/isValidId";
 //!Router is an empty object that saves routes
 // console.log("object plantRouter looks like this:", plantsRouter.stack[1].route)
 //controller is a handler functions as a second argument after a route. 
@@ -11,15 +12,15 @@ const plantsRouter = Router()
 
 plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
-plantsRouter.get("/:id", ctrlWrapper(plantsControllers.getPlantByIdController))
+plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
 plantsRouter.post("/", validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
-plantsRouter.put("/:id", validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
+plantsRouter.put("/:id", isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 
-plantsRouter.patch("/:id", validateBody(plantUpdateSchema), ctrlWrapper(plantsControllers.patchPlantController))
+plantsRouter.patch("/:id", isValidId, validateBody(plantUpdateSchema), ctrlWrapper(plantsControllers.patchPlantController))
 
-plantsRouter.delete("/:id", ctrlWrapper(plantsControllers.deletePlantController))
+plantsRouter.delete("/:id", isValidId, ctrlWrapper(plantsControllers.deletePlantController))
 
 export default plantsRouter;
 

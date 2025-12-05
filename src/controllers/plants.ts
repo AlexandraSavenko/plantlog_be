@@ -15,6 +15,9 @@ export const getPlantByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const data = await plantsServises.getPlantById(id);
+  //if the plant doesn't exist, we receive null and will get into iff ->> 404
+  //if the id value is invalid md_id (eg name), md method .findOneById will throw error
+  //a middleware (isValidId) should check if id looks like md_id
   if (!data) {
     throw createHttpError(404, `Plant with id=${id} not found`);
     //the error we are throwing will be caught by next in ctrlWrapper
