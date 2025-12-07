@@ -5,7 +5,7 @@ import { parsePaginationParams } from "../utils/parsePaginationParams";
 
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
-  const data = await plantsServises.getPlants();
+  const data = await plantsServises.getPlants({page, perPage});
   res.status(200).json({
     status: 200,
     message: "Plantlog the best",
