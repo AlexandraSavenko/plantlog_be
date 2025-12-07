@@ -1,19 +1,20 @@
 import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
-import { plantType } from "../../types/types";
+import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+
 
 const plantSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, "Name is required"],
     },
     description: {
         type: String,
-        required: true,
+        required: [true, "Description is required"],
     },
     photo: {
         type: String,
-        required: true,
+        required: [true, "Photo is required"],
     },
     plantType: {
         type: String,
@@ -30,10 +31,11 @@ const plantSchema = new Schema({
 // the second should be a function with three!! arguments
 //it's like we go inside the method and in case saving went unsuccessfully run this function firts and then go on
 // from "https://mongoosejs.com/docs/validation.html"
-plantSchema.post("save", (error: any, data: plantType, next: (err?: CallbackError) => void) => {
-    error.status = 400
-    next()
-})
+plantSchema.post("save", handleSaveErrorStatus);
+
+plantSchema.pre("findOneAndUpdate", setUpdateSettings);
+
+plantSchema.post("findOneAndUpdate", handleSaveErrorStatus);
 
 const PlantCollection = model("plants", plantSchema);
 
