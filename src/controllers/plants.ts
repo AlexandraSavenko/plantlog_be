@@ -4,11 +4,16 @@ import { Request, Response, NextFunction } from "express";
 import { parsePaginationParams } from "../utils/parsePaginationParams";
 import { sortByList } from "../db/models/Plant";
 import { parseSortParams } from "../utils/parseSortParams";
+import { parsePlantsFilterParams } from "../utils/parsePlantsFilterParams";
 
 
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
   const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
+  const filters = parsePlantsFilterParams(req.query);
+  // const filterName = req.query.name;
+  // const filterType = req.query.plantType;
+  console.log(filters)
   const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder});
   res.status(200).json({
     status: 200,

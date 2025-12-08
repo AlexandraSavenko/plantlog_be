@@ -40,7 +40,7 @@ plantSchema.post("findOneAndUpdate", handleSaveErrorStatus);
 
 //this list should be changed if the schema changes! it is used in parseSortParams function;
 export const sortByList: (keyof plantType)[] = ["name", "description", "photo", "plantType"];
-
+export const filterByPlantTypeList = ["tree", "bush", "grass"]
 const PlantCollection = model("plants", plantSchema);
 
 export default PlantCollection;

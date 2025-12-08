@@ -22,7 +22,7 @@ export interface upsertPlantParams {
     photo?: string;
     plantType?: "tree" | "bush" | "grass";
   };
-  options?: {upsert?: boolean};
-};
+  options?: { upsert?: boolean };
+}
 
-export type SortOrderType = 'asc' | 'desc';
+export type SortOrderType = "asc" | "desc";
