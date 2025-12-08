@@ -1,13 +1,13 @@
 import PlantCollection from "../db/models/Plant";
-import { plantType, upsertPlantParams } from "../types/types";
+import { plantType, SortOrderType, upsertPlantParams } from "../types/types";
 import { calculatePaginationData } from "../utils/calculatePaginationData";
 
 // Mongoose queries are then-able thus they return Promise-like object.
 // export const getPlants = () => PlantCollection.find();
-export const getPlants = async ({page = 1, perPage = 10}) => {
+export const getPlants = async ({page = 1, perPage = 10, sortBy = "_id", sortOrder = "asc"}) => {
   //.skip() method skips as many elements of a collection as the argument tells it.
   const skip = (page - 1) * perPage;
-  const data = await PlantCollection.find().skip(skip).limit(perPage);
+  const data = await PlantCollection.find().skip(skip).limit(perPage).sort({[sortBy]: sortOrder as SortOrderType});
   const totalItems = await PlantCollection.countDocuments();
   const paginationData = calculatePaginationData({page, perPage, totalItems});
   return {data, ...paginationData};

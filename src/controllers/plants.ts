@@ -2,10 +2,14 @@ import createHttpError from "http-errors";
 import * as plantsServises from "../services/plants";
 import { Request, Response, NextFunction } from "express";
 import { parsePaginationParams } from "../utils/parsePaginationParams";
+import { sortByList } from "../db/models/Plant";
+import { parseSortParams } from "../utils/parseSortParams";
+
 
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
-  const data = await plantsServises.getPlants({page, perPage});
+  const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
+  const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder});
   res.status(200).json({
     status: 200,
     message: "Plantlog the best",

@@ -1,6 +1,7 @@
 import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
 import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+import { plantType } from "../../types/types";
 
 
 const plantSchema = new Schema({
@@ -36,6 +37,9 @@ plantSchema.post("save", handleSaveErrorStatus);
 plantSchema.pre("findOneAndUpdate", setUpdateSettings);
 
 plantSchema.post("findOneAndUpdate", handleSaveErrorStatus);
+
+//this list should be changed if the schema changes! it is used in parseSortParams function;
+export const sortByList: (keyof plantType)[] = ["name", "description", "photo", "plantType"];
 
 const PlantCollection = model("plants", plantSchema);
 

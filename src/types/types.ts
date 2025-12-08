@@ -1,3 +1,12 @@
+// type ParsedQs = {
+//   [key: string]:
+//     | string
+//     | string[]
+//     | ParsedQs
+//     | ParsedQs[]
+//     | undefined;
+// };
+
 export interface plantType {
   name: string;
   description: string;
@@ -14,4 +23,6 @@ export interface upsertPlantParams {
     plantType?: "tree" | "bush" | "grass";
   };
   options?: {upsert?: boolean};
-}
+};
+
+export type SortOrderType = 'asc' | 'desc';
