@@ -11,10 +11,7 @@ export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
   const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
   const filters = parsePlantsFilterParams(req.query);
-  // const filterName = req.query.name;
-  // const filterType = req.query.plantType;
-  console.log(filters)
-  const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder});
+  const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder, filters});
   res.status(200).json({
     status: 200,
     message: "Plantlog the best",

@@ -4,11 +4,14 @@ import { calculatePaginationData } from "../utils/calculatePaginationData";
 
 // Mongoose queries are then-able thus they return Promise-like object.
 // export const getPlants = () => PlantCollection.find();
-export const getPlants = async ({page = 1, perPage = 10, sortBy = "_id", sortOrder = "asc"}) => {
+export const getPlants = async ({page = 1, perPage = 10, sortBy = "_id", sortOrder = "asc", filters = {}}) => {
   //.skip() method skips as many elements of a collection as the argument tells it.
   const skip = (page - 1) * perPage;
-  const data = await PlantCollection.find().skip(skip).limit(perPage).sort({[sortBy]: sortOrder as SortOrderType});
-  const totalItems = await PlantCollection.countDocuments();
+  const query = PlantCollection.find(filters).skip(skip).limit(perPage).sort({[sortBy]: sortOrder as SortOrderType});
+  const data = await query
+  //Mongoose can't run the same request twise because an error will happen: Query was already executed: plants.countDocuments
+  //so to count total items with filters we need to create a new request and merge query in it.
+  const totalItems = await PlantCollection.find().merge(query).countDocuments();
   const paginationData = calculatePaginationData({page, perPage, totalItems});
   return {data, ...paginationData};
 };
