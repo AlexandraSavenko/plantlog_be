@@ -1,5 +1,5 @@
 import PlantCollection from "../db/models/Plant";
-import { plantType, SortOrderType, upsertPlantParams } from "../types/types";
+import { plantType, SortOrderType, upsertPlantParams } from "../types/plants";
 import { calculatePaginationData } from "../utils/calculatePaginationData";
 
 // Mongoose queries are then-able thus they return Promise-like object.

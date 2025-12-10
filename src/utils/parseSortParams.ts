@@ -1,4 +1,4 @@
-import { plantType } from "../types/types";
+import { plantType } from "../types/plants";
 import { ParsedQs } from "qs";
 
 const parseValue = (value: unknown) => {

@@ -1,5 +1,5 @@
 import { NextFunction } from "express";
-import { plantType } from "../types/types";
+import { plantType } from "../types/plants";
 import { CallbackError, Query} from "mongoose";
 export const handleSaveErrorStatus = (error: any, data: plantType, next: (err?: CallbackError) => void) => {
     error.status = 400

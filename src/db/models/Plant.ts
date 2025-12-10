@@ -1,7 +1,7 @@
 import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
 import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
-import { plantType } from "../../types/types";
+import { plantType } from "../../types/plants";
 
 
 const plantSchema = new Schema({
