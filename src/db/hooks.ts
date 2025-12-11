@@ -2,7 +2,9 @@ import { NextFunction } from "express";
 import { plantType } from "../types/plants";
 import { CallbackError, Query} from "mongoose";
 export const handleSaveErrorStatus = (error: any, data: plantType, next: (err?: CallbackError) => void) => {
-    error.status = 400
+    //in case email already exist in db, error will have code 11000 but in case email is invalid error.code = undefined
+    const {code, name} = error;
+    error.status = (name === "MongoServerError" && code === 11000) ? 409 : 400;
     next()
 }
 
@@ -13,4 +15,8 @@ export const setUpdateSettings = function(this: Query<any, any>, next: (err?: Ca
     // this.options.new = true
     this.setOptions({runValidators: true, new: true});
     next()
+}
+
+export const handleSchemaIssues = () => {
+    
 }

@@ -11,6 +11,8 @@ const userSchema = new Schema({
   email: {
     type: String,
     match: emailRegex,
+    //in atlas in the db there is a tab called indexes and there should be not only _id but also email, if not it should be created manually
+    //this is the only exception when check is made after db request not before it thus in service we need to make two db requests to send error message that will look userfriendly
     unique: true,
     required: [true, "email is required"],
   },
