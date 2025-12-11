@@ -2,6 +2,7 @@ import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
 import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 import { plantType } from "../../types/plants";
+import { required } from "joi";
 
 
 const plantSchema = new Schema({
@@ -23,6 +24,11 @@ const plantSchema = new Schema({
         required: true,
         default: "tree"
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: true
+    }
 }, {versionKey: false, timestamps: true});
 //Mongoose Hook:
 //to set status in case req.body doesn't match schema (cause if it doesn't md throws error, ctrlWrapper catches it but there's no status ->> 500)

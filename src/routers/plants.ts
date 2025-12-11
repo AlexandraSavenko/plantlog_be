@@ -4,23 +4,28 @@ import ctrlWrapper from "../utils/ctrlWrapper";
 import { plantAddSchema, plantUpdateSchema } from "../validation/plants";
 import validateBody from "../utils/validateBody";
 import isValidId from "../middlewares/isValidId";
+import { authenticate } from "../middlewares/authenticate";
 //!Router is an empty object that saves routes
 // console.log("object plantRouter looks like this:", plantsRouter.stack[1].route)
 //controller is a handler functions as a second argument after a route. 
 const plantsRouter = Router()
 //middlewares for router could also be added: plantsRouter.use((req) => {if(req.method === "GET")} do something)
 
+
+//if a middleware has to be used to every route the following could be done:
+//plantsRouter.use(authenticate);
+
 plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
 plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
-plantsRouter.post("/", validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
+plantsRouter.post("/", authenticate, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
-plantsRouter.put("/:id", isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
+plantsRouter.put("/:id", authenticate, isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 
-plantsRouter.patch("/:id", isValidId, validateBody(plantUpdateSchema), ctrlWrapper(plantsControllers.patchPlantController))
+plantsRouter.patch("/:id", authenticate, isValidId, validateBody(plantUpdateSchema), ctrlWrapper(plantsControllers.patchPlantController))
 
-plantsRouter.delete("/:id", isValidId, ctrlWrapper(plantsControllers.deletePlantController))
+plantsRouter.delete("/:id", authenticate, isValidId, ctrlWrapper(plantsControllers.deletePlantController))
 
 
 export default plantsRouter;

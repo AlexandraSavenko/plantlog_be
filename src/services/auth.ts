@@ -6,6 +6,8 @@ import SessionCollection from "../db/models/Session";
 //crypto is build in express;
 import {randomBytes} from "crypto"
 import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/users";
+//ObjectId type from mongoose and from mongodb are different and don't work for the same purposes
+import { ObjectId } from "mongodb";
 
 export const signup = async ( payload: UserType) => {
     const {email, password} = payload;
@@ -30,6 +32,7 @@ if(!checkPassword){
 await SessionCollection.deleteOne({userId: user._id});
 
 const accessToken = randomBytes(30).toString("base64");
+//check pattern called Refresh Token Rotation (RTR) in the future
 const refreshToken = randomBytes(30).toString("base64");
 return SessionCollection.create({
     userId: user._id,
@@ -39,3 +42,8 @@ return SessionCollection.create({
     refreshTokenValidUntil: Date.now() + refreshTokenLifeTime
 })
 }
+
+//this request is for authenticate.ts middleware to check if token is valid and exists in one of the sessions
+export const findSession = (filter: {accessToken: string}) => SessionCollection.findOne(filter)
+export const findUser = (filter: {_id: ObjectId}) => UsersCollection.findOne(filter)
+    

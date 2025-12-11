@@ -1,9 +1,11 @@
-import { CallbackError, Schema, model } from "mongoose";
+import { CallbackError, Schema, model, Document} from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
 import { emailRegex } from "../../constants/users";
 import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+import { UserType } from "../../types/auth";
 
-const userSchema = new Schema({
+export interface UserDocument extends UserType, Document {};
+const userSchema = new Schema<UserDocument>({
   username: {
     type: String,
     required: [true, "Name is required"],
@@ -26,6 +28,6 @@ const userSchema = new Schema({
 //makes mongoose check with schema on put and patch and return new object
 applySchemaHooks(userSchema)
 
-const UsersCollection = model("users", userSchema);
+const UsersCollection = model<UserDocument>("users", userSchema);
 
 export default UsersCollection;
