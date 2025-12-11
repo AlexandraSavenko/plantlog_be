@@ -1,5 +1,5 @@
 import { CallbackError, Schema, model } from "mongoose";
-import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 import { required } from "joi";
 
 const sessionSchema = new Schema({
@@ -14,20 +14,16 @@ const sessionSchema = new Schema({
     }, refreshToken: {
          type: String,
         required: true
-    }, accessTokenValidUntill: {
+    }, accessTokenValidUntil: {
         type: Date,
         required: true
-    }, refreshTokenValidUntill: {
+    }, refreshTokenValidUntil: {
         type: Date,
         required: true
     }
 }, {versionKey: false, timestamps: true})
 
-sessionSchema.post("save", handleSaveErrorStatus);
-
-sessionSchema.pre("findOneAndUpdate", setUpdateSettings);
-
-sessionSchema.post("findOneAndUpdate", handleSaveErrorStatus);
+applySchemaHooks(sessionSchema);
 const SessionCollection = model("session", sessionSchema);
 
 export default SessionCollection;

@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 import { plantType } from "../types/plants";
-import { CallbackError, Query} from "mongoose";
+import mongoose, { CallbackError, Query} from "mongoose";
 export const handleSaveErrorStatus = (error: any, data: plantType, next: (err?: CallbackError) => void) => {
     //in case email already exist in db, error will have code 11000 but in case email is invalid error.code = undefined
     const {code, name} = error;
@@ -17,6 +17,11 @@ export const setUpdateSettings = function(this: Query<any, any>, next: (err?: Ca
     next()
 }
 
-export const handleSchemaIssues = () => {
-    
+export const applySchemaHooks = (schema: mongoose.Schema) => {
+schema.post("save", handleSaveErrorStatus);
+schema.pre("findOneAndUpdate", setUpdateSettings);
+schema.post("findOneAndUpdate", handleSaveErrorStatus);
+// schema.post("save", function() {
+//     console.log("Saving went well!")
+// })
 }

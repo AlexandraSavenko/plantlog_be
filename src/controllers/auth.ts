@@ -11,6 +11,24 @@ res.status(201).json({
 }
 
 export const signinController = async (req: Request, res: Response) => {
-const data = await authServices.signin(req.body)
+const {_id, accessToken, refreshToken, refreshTokenValidUntil} = await authServices.signin(req.body);
+
+res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    expires: refreshTokenValidUntil
+})
+//no idea why session id could be saved in cookies, but obviously there could be some need
+res.cookie("sessionId", _id, {
+    httpOnly: true,
+    expires: refreshTokenValidUntil
+})
+
+res.json({
+    status: 200,
+    message: "User has been successfully signed in",
+    data: {
+        accessToken
+    }
+})
 }
 

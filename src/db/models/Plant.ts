@@ -1,6 +1,6 @@
 import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
-import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 import { plantType } from "../../types/plants";
 
 
@@ -32,11 +32,11 @@ const plantSchema = new Schema({
 // the second should be a function with three!! arguments
 //it's like we go inside the method and in case saving went unsuccessfully run this function firts and then go on
 // from "https://mongoosejs.com/docs/validation.html"
-plantSchema.post("save", handleSaveErrorStatus);
 
-plantSchema.pre("findOneAndUpdate", setUpdateSettings);
 
-plantSchema.post("findOneAndUpdate", handleSaveErrorStatus);
+//this function in hooks applies all three hooks to the schema
+applySchemaHooks(plantSchema);
+
 
 //this list should be changed if the schema changes! it is used in parseSortParams function;
 export const sortByList: (keyof plantType)[] = ["name", "description", "photo", "plantType"];

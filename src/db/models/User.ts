@@ -1,7 +1,7 @@
 import { CallbackError, Schema, model } from "mongoose";
 import { plantsTypelist } from "../../constants/plants";
 import { emailRegex } from "../../constants/users";
-import { handleSaveErrorStatus, setUpdateSettings } from "../hooks";
+import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 
 const userSchema = new Schema({
   username: {
@@ -23,11 +23,8 @@ const userSchema = new Schema({
 }, {versionKey: false, timestamps: true});
 
 //gives status 400 to mongo db errors
-userSchema.post("save", handleSaveErrorStatus);
 //makes mongoose check with schema on put and patch and return new object
-userSchema.pre("findOneAndUpdate", setUpdateSettings);
-
-userSchema.post("findOneAndUpdate", handleSaveErrorStatus);
+applySchemaHooks(userSchema)
 
 const UsersCollection = model("users", userSchema);
 
