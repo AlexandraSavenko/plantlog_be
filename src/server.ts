@@ -2,9 +2,10 @@ import express from "express";
 import cors from 'cors';
 import { env } from "./utils/env";
 import plantsRouter from "./routers/plants";
+import authRouter from "./routers/auth";
 import {notFoundHandler} from "./middlewares/notFoundHandler"
 import { errorHandler } from "./middlewares/errorHandler";
-import authRouter from "./routers/auth";
+
 
 export const startServer = () => {
 const app = express();
@@ -13,13 +14,13 @@ app.use(cors())
 //it's a buildin function to convert req.body to json
 app.use(express.json())
 
-app.use("/auth", authRouter);
 //creating middleware with object plantsRouter; 
 // first it checks if req.body headers have header called "Content-Type" (should be application/json)
 // if it doesn't have it, the middleware passes it further, but if there is one it checks it
 // it takes the body in buffer --> json.parse() --> passes further
-app.use("/plants", plantsRouter);
 
+app.use("/plants", plantsRouter);
+app.use("/auth", authRouter);
 app.use(notFoundHandler)
 
 app.use(errorHandler)

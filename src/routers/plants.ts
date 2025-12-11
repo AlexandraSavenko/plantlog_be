@@ -22,6 +22,7 @@ plantsRouter.patch("/:id", isValidId, validateBody(plantUpdateSchema), ctrlWrapp
 
 plantsRouter.delete("/:id", isValidId, ctrlWrapper(plantsControllers.deletePlantController))
 
+
 export default plantsRouter;
 
 //!!! higher order functions !!! don't call other functions, they return them so ehat Express receives:

@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   }
-});
+}, {versionKey: false, timestamps: true});
 
 //gives status 400 to mongo db errors
 userSchema.post("save", handleSaveErrorStatus);
