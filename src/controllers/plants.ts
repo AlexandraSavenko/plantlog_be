@@ -6,11 +6,17 @@ import { sortByList } from "../db/models/Plant";
 import { parseSortParams } from "../utils/parseSortParams";
 import { parsePlantsFilterParams } from "../utils/parsePlantsFilterParams";
 
-//public routes__________________________________________________________
+
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
   const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
   const filters = parsePlantsFilterParams(req.query);
+  //there seems to be no need to create private controller
+  console.log(req.user)
+  if(req.user?._id){
+    filters.userId = req.user._id
+    console.log("filters in controller", filters)
+  }
   const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder, filters});
   res.status(200).json({
     status: 200,
@@ -38,7 +44,7 @@ export const getPlantByIdController = async (req: Request, res: Response) => {
 };
 
 
-//privat routes______________________________________________________________________
+
 //req.body don't have json automaticlly because express can't read it(it sees binary code only) so in server we call a function that converts req.body to json
 export const addPlantController = async (req: Request, res: Response) => {
   if(!req.user){

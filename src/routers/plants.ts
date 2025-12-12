@@ -17,6 +17,9 @@ const plantsRouter = Router()
 
 plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
+//it's vital to keep /own before /:id otherwise it would treat /own --> /:id for it reads from top to bottom
+plantsRouter.get("/own", authenticate, ctrlWrapper(plantsControllers.getPlantsController))
+
 plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
 plantsRouter.post("/", authenticate, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))

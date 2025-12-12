@@ -4,6 +4,7 @@ import createHttpError from "http-errors";
 import { findSession, findUser } from "../services/auth";
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("authenticate runs")
 const authHeader = req.get("Authorization");
 if(!authHeader){
     //throw error won't work here because we don't wrap this function in ctrlWrapper so throwing error will crash backend
@@ -34,6 +35,7 @@ if(!user){
 //to allow user in req type I've added .d.ts file in types, typed Schema and model in /db/models/User and added additional line to tsconfig.json
 //however nodemon couldn't compile it all together untill I added nodemon.json file and restarted nodemon with:
 //npx nodemon --exec "npx ts-node --files" src/index.ts
+//adding this command to package.json allowed me to avoid typing it each time 
 //so the whole problem with making user bacome part of req type took me two days and I had to turn what db returned to a plain object with .lean()
 //becuase its type wouldn't match the type I've created otherwise and also I've typed the schema itself, though I can't clearly understand it at the moment
 req.user = user

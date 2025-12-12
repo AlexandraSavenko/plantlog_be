@@ -8,6 +8,7 @@ export const getPlants = async ({page = 1, perPage = 10, sortBy = "_id", sortOrd
   //.skip() method skips as many elements of a collection as the argument tells it.
   const skip = (page - 1) * perPage;
   const query = PlantCollection.find(filters).skip(skip).limit(perPage).sort({[sortBy]: sortOrder as SortOrderType});
+  console.log("filters in service", filters)
   const data = await query
   //Mongoose can't run the same request twise because an error will happen: Query was already executed: plants.countDocuments
   //so to count total items with filters we need to create a new request and merge query in it.

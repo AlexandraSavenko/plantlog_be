@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.ts",
-    "dev": "nodemon --watch src --exec ts-node src/index.ts"
+    "dev": "nodemon --exec \"npx ts-node --files\" src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -41,3 +41,6 @@
     "typescript": "^5.9.3"
   }
 }
+
+
+ 
