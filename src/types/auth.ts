@@ -4,6 +4,7 @@ export interface UserType {
     username?: string;
     email: string;
     password: string;
+    favorites: Types.ObjectId[]
 }
 
 export interface AuthUserType {

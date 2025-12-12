@@ -1,5 +1,4 @@
 import { CallbackError, Schema, model, Document} from "mongoose";
-import { plantsTypelist } from "../../constants/plants";
 import { emailRegex } from "../../constants/users";
 import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 import { UserType } from "../../types/auth";
@@ -21,7 +20,10 @@ const userSchema = new Schema<UserDocument>({
   password: {
     type: String,
     required: [true, "Password is required"],
-  }
+  }, favorites: [{
+    type: Schema.Types.ObjectId,
+    ref: "plants",
+  }]
 }, {versionKey: false, timestamps: true});
 
 //gives status 400 to mongo db errors

@@ -1,11 +1,12 @@
 import Joi from "joi";
-import { plantsTypelist } from "../constants/plants";
+import { GrowthFormList, OriginList } from "../constants/plants";
 
 export const plantAddSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     photo: Joi.string().required(),
-    plantType: Joi.string().valid(...plantsTypelist)
+    growthForm: Joi.string().valid(...GrowthFormList),
+    origin: Joi.string().valid(...OriginList)
 })
 
 //name: Joi.string().required().messages({
@@ -16,5 +17,6 @@ export const plantUpdateSchema = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
     photo: Joi.string(),
-    plantType: Joi.string().valid(...plantsTypelist)
+    growthForm: Joi.string().valid(...GrowthFormList),
+    origin: Joi.string().valid(...OriginList)
 })
