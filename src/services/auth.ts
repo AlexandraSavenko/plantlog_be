@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import UsersCollection from "../db/models/User";
-import { UserType } from "../types/auth";
+import { AuthUserType, UserType } from "../types/auth";
 import bcrypt from "bcryptjs";
 import SessionCollection from "../db/models/Session";
 //crypto is build in express;
@@ -45,5 +45,5 @@ return SessionCollection.create({
 
 //this request is for authenticate.ts middleware to check if token is valid and exists in one of the sessions
 export const findSession = (filter: {accessToken: string}) => SessionCollection.findOne(filter)
-export const findUser = (filter: {_id: ObjectId}) => UsersCollection.findOne(filter)
+export const findUser = (filter: {_id: ObjectId}) => UsersCollection.findById(filter).lean<AuthUserType>()
     

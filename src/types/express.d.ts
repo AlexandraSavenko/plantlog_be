@@ -1,10 +1,10 @@
-// interface userId {
-//     userId: stirng
-// }
+import { AuthUserType } from "./auth";
+
+
 declare global{
     namespace Express {
         interface Request {
-            user?: import("../types/auth").UserType
+            user?: AuthUserType
         }
     }
 }

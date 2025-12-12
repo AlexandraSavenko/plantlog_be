@@ -6,7 +6,7 @@ import { sortByList } from "../db/models/Plant";
 import { parseSortParams } from "../utils/parseSortParams";
 import { parsePlantsFilterParams } from "../utils/parsePlantsFilterParams";
 
-
+//public routes__________________________________________________________
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
   const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
@@ -37,10 +37,15 @@ export const getPlantByIdController = async (req: Request, res: Response) => {
   });
 };
 
+
+//privat routes______________________________________________________________________
 //req.body don't have json automaticlly because express can't read it(it sees binary code only) so in server we call a function that converts req.body to json
 export const addPlantController = async (req: Request, res: Response) => {
- 
-  const data = await plantsServises.addPlant(req.body);
+  if(!req.user){
+    throw createHttpError(401, "User not authenticated");
+  }
+ const {_id: userId} = req.user;
+  const data = await plantsServises.addPlant({...req.body, userId});
   res.status(201).json({
     status: 201,
     message: "Success",
