@@ -4,7 +4,11 @@ import { AuthUserType } from "./auth";
 declare global{
     namespace Express {
         interface Request {
-            user?: AuthUserType
+            user?: AuthUserType,
+            cookies: {
+                sessionId?: string,
+                refreshToken?: string 
+            }
         }
     }
 }

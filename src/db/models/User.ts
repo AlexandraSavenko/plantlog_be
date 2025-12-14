@@ -3,8 +3,9 @@ import { emailRegex } from "../../constants/users";
 import { applySchemaHooks, handleSaveErrorStatus, setUpdateSettings } from "../hooks";
 import { UserType } from "../../types/auth";
 
-export interface UserDocument extends UserType, Document {};
-const userSchema = new Schema<UserDocument>({
+// export interface UserDocument extends UserType, Document {};
+//this interface did the opposite, it confused typescript!!!! 
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, "Name is required"],
@@ -30,6 +31,6 @@ const userSchema = new Schema<UserDocument>({
 //makes mongoose check with schema on put and patch and return new object
 applySchemaHooks(userSchema)
 
-const UsersCollection = model<UserDocument>("users", userSchema);
+const UsersCollection = model("users", userSchema);
 
 export default UsersCollection;

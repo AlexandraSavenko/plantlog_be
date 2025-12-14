@@ -13,4 +13,6 @@ authRouter.post(
 );
 authRouter.post("/signin", validateBody(authSignInSchema), ctrlWrapper(authControllers.signinController))
 
+//to read cookies a lib called cookie-parser needs to be installed and used in server
+authRouter.post("/refresh", ctrlWrapper(authControllers.refreshSessionController))
 export default authRouter;

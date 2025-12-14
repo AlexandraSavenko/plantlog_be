@@ -5,7 +5,7 @@ import plantsRouter from "./routers/plants";
 import authRouter from "./routers/auth";
 import {notFoundHandler} from "./middlewares/notFoundHandler"
 import { errorHandler } from "./middlewares/errorHandler";
-
+import cookieParser from "cookie-parser";
 
 export const startServer = () => {
 const app = express();
@@ -13,6 +13,8 @@ app.use(cors())
 
 //it's a buildin function to convert req.body to json
 app.use(express.json())
+//it's a lib that needs to be installed to read cookies npm i cookie-parser and npm i -D @types/cookie-parser
+app.use(cookieParser())
 
 //creating middleware with object plantsRouter; 
 // first it checks if req.body headers have header called "Content-Type" (should be application/json)
