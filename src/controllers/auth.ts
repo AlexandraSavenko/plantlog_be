@@ -58,3 +58,18 @@ export const refreshSessionController = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const signoutController = async (req: Request, res: Response) => {
+  const sessionId = req.cookies.sessionId
+if(sessionId){
+  const data = await authServices.signout(sessionId)
+}
+res.clearCookie("sessionId");
+res.clearCookie("refreshToken");
+
+
+res.status(200).json({
+  status: 200,
+  message: "User has been successfully signed out"
+})
+}

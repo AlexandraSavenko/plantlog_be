@@ -84,3 +84,8 @@ export const refreshUserSession = async ({
     ...newSession
   })
 };
+
+export const signout = async (sessionId: string) => {
+  //even if there was no session, it can't hurt anyone
+await SessionCollection.deleteOne({_id: sessionId})
+}
