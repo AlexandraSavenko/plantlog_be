@@ -12,10 +12,8 @@ export const getPlantsController = async (req: Request, res: Response) => {
   const {sortBy, sortOrder} = parseSortParams(req.query, sortByList);
   const filters = parsePlantsFilterParams(req.query);
   //there seems to be no need to create private controller
-  console.log(req.user)
   if(req.user?._id){
     filters.userId = req.user._id
-    console.log("filters in controller", filters)
   }
   const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder, filters});
   res.status(200).json({
@@ -68,9 +66,13 @@ export const upsertPlantController = async (req: Request, res: Response) => {
     });
   }
   //------------------------------------------
-
+if(!req.user){
+    throw createHttpError(401, "User not authenticated");
+  }
+ const {_id: userId} = req.user
   const { id: _id } = req.params;
   const result = await plantsServises.updatePlant({
+    userId: userId.toString(),
     _id,
     payload: req.body,
     options: { upsert: true },

@@ -22,6 +22,7 @@ export interface plantType {
 }
 
 export interface upsertPlantParams {
+  userId?: string,
   _id: string;
   payload: {
     name?: string;
