@@ -3,8 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import { findSession, findUser } from "../services/auth";
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("authenticate runs")
+export const authenticate = async (req: Request, res: Response, next: NextFunction) => { 
 const authHeader = req.get("Authorization");
 if(!authHeader){
     //throw error won't work here because we don't wrap this function in ctrlWrapper so throwing error will crash backend

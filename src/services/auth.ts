@@ -9,7 +9,19 @@ import { accessTokenLifeTime, refreshTokenLifeTime } from "../constants/users";
 //ObjectId type from mongoose and from mongodb are different and don't work for the same purposes
 import { ObjectId } from "mongodb";
 import {Types} from "mongoose";
+//email-verification
+import { sendEmail } from "../utils/sendEmail";
 
+import * as path from "node:path";
+import { TEMPLATE_DIR } from "../constants/emailVerification";
+//what is this I've no idea
+import * as fs from "node:fs/promises";
+import Handlebars from "handlebars";
+import {env} from "../utils/env"
+
+const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
+const appDomain = env("APP_DOMAIN");
+//console.log(emailTemplatePath) --> D:\Projects\plantlog_be\src\templates\verify-email.html
 const createSession = async (userId: string) => {
     //should be better that delete one
     await SessionCollection.deleteMany({ userId });
@@ -30,7 +42,22 @@ export const signup = async (payload: UserType) => {
     throw createHttpError(409, "Email is already in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  return UsersCollection.create({ ...payload, password: hashPassword });
+  const newUser = await UsersCollection.create({ ...payload, password: hashPassword });
+
+  //we need to read the content of the html file with email and transform is from binary to text
+  const templateSource = await fs.readFile(emailTemplatePath, "utf-8");
+  //next handlebars template needs to be created. Handlears turns text to object
+  const template = Handlebars.compile(templateSource)
+  //html content of the letter needs to be created --> we call template as a function and pass content
+  //and this html goes as verifyEmail.html
+  const html = template({link: `${appDomain}/auth/verify`})
+  const verifyEmail = {
+    to: email,
+    subject: "Plantlog email verification",
+    html
+  }
+  await sendEmail(verifyEmail);
+  return newUser;
 };
 
 export const signin = async ({ email, password }: UserType) => {
@@ -38,6 +65,9 @@ export const signin = async ({ email, password }: UserType) => {
 
   if (!user) {
     throw createHttpError(401, "Email is incorrect");
+  }
+  if(!user.verify){
+    throw createHttpError(401, "You need to verify your email")
   }
   const checkPassword = await bcrypt.compare(password, user.password);
   if (!checkPassword) {
