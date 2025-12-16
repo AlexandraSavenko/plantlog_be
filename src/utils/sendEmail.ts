@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
+import { SendEmailProps } from "../types/verification";
 
 const {UKR_NET_PASSWORD, UKR_NET_FROM} = process.env
 
@@ -25,14 +26,10 @@ const email = {
 }
 
 //method .sendMail has to be called on transporter and it will return Promise, the same could be done in a function
-transporter.sendMail(email).then(() => console.log("Email send successfully")).catch(error => console.log(error.message))
+// transporter.sendMail(email).then(() => console.log("Email send successfully")).catch(error => console.log(error.message))
 
-interface SendEmailProps {
-    to: string,
-    subject: string,
-    html: string
-}
+//async await is useless without trycatch, there's no point wait if you don't catch errors, but the call could be await (authServices.signup)
 export const sendEmail = (data: SendEmailProps) => {
     const email = {...data, from: UKR_NET_FROM};
-    return transporter.sendMail(email).then(() => console.log("Email send successfully")).catch(error => console.log(error.message))
+    return transporter.sendMail(email).then(() => console.log("Email send successfully"))
 }

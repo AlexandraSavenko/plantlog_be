@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AlexandraSavenko/plantlog_be#readme",
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/nodemailer": "^7.0.4",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -30,6 +31,7 @@
     "handlebars": "^4.7.8",
     "http-errors": "^2.0.1",
     "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.19.3",
     "nodemailer": "^7.0.11",
     "pino-http": "^11.0.0"
