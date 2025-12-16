@@ -5,6 +5,7 @@ declare global{
     namespace Express {
         interface Request {
             user?: AuthUserType,
+            userEmail?: string,
             cookies: {
                 sessionId?: string,
                 refreshToken?: string 

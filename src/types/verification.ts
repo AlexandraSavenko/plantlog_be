@@ -3,3 +3,7 @@ export interface SendEmailProps {
     subject: string,
     html: string
 }
+
+export interface EmailTokenPayload {
+    email: string;
+}

@@ -18,7 +18,8 @@ import { TEMPLATE_DIR } from "../constants/emailVerification";
 import * as fs from "node:fs/promises";
 import Handlebars from "handlebars";
 import {env} from "../utils/env"
-import { createJWT } from "../utils/jwt";
+import { checkJWT, createJWT } from "../utils/jwt";
+import jwt from "jsonwebtoken";
 
 const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
 const appDomain = env("APP_DOMAIN");
@@ -60,6 +61,10 @@ export const signup = async (payload: UserType) => {
   }
   await sendEmail(verifyEmail);
   return newUser;
+};
+
+export const verifyUser = async (email: string) => {
+await UsersCollection.findByIdAndUpdate(email, {verify: true})
 };
 
 export const signin = async ({ email, password }: UserType) => {

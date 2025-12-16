@@ -33,6 +33,17 @@ export const signupController = async (req: Request, res: Response) => {
   });
 };
 
+export const verifyController = async (req: Request, res: Response) => {
+  if(!req.userEmail){
+    return createHttpError(400, "Could not verify email")
+  }
+  await authServices.verifyUser(req.userEmail)
+  res.json({
+    status: 200,
+    message: "User has been verifies"
+  })
+}
+
 export const signinController = async (req: Request, res: Response) => {
   const session = await authServices.signin(req.body);
 
