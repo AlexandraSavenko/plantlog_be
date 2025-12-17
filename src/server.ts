@@ -11,7 +11,8 @@ export const startServer = () => {
 const app = express();
 app.use(cors())
 
-//it's a buildin function to convert req.body to json
+//it's a buildin function to convert req.body to json, first it checks if there is content-type in Headers and then if it's json
+//and puts json to req.body, but if instead of json it's form-data it bypasses the request
 app.use(express.json())
 //it's a lib that needs to be installed to read cookies npm i cookie-parser and npm i -D @types/cookie-parser
 app.use(cookieParser())
