@@ -13,3 +13,12 @@ export interface AuthUserType {
     email: string;
     password: string;
 }
+
+export interface Session {
+  _id: Types.ObjectId;
+  userId: Types.ObjectId;
+  accessToken: string;
+  refreshToken: string;
+  accessTokenValidUntil: Date;
+  refreshTokenValidUntil: Date;
+}

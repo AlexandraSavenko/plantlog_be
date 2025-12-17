@@ -2,7 +2,11 @@ import nodemailer from "nodemailer";
 import "dotenv/config";
 import { SendEmailProps } from "../types/verification";
 
+
+
 const {UKR_NET_PASSWORD, UKR_NET_FROM} = process.env
+
+
 
 //nodemailer is a lib and a config object has to be created
 const nodemailerConfig = {

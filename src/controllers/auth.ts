@@ -2,15 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
 import * as authServices from "../services/auth";
 import createHttpError from "http-errors";
+import { Session } from "../types/auth";
 
-interface Session {
-  _id: Types.ObjectId;
-  userId: Types.ObjectId;
-  accessToken: string;
-  refreshToken: string;
-  accessTokenValidUntil: Date;
-  refreshTokenValidUntil: Date;
-}
+
 const setupSession = (res: Response, session: Session) => {
   res.cookie("refreshToken", session.refreshToken, {
     httpOnly: true,
