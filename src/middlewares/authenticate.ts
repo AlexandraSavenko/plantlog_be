@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import createHttpError from "http-errors";
-import { findSession, findUser } from "../services/auth";
+import { findSession, findUserById } from "../services/auth";
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => { 
 const authHeader = req.get("Authorization");
@@ -25,7 +25,7 @@ if(Date.now() > session.accessTokenValidUntil.getTime()){
 return next(createHttpError(401, "Access token expired"));
 }
 //check if user exists any way is needed
-const user = await findUser({_id: session.userId});
+const user = await findUserById({_id: session.userId});
 if(!user){
     return next(createHttpError(401, "Access token expired"));
 }

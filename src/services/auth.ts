@@ -18,8 +18,7 @@ import { TEMPLATE_DIR } from "../constants/emailVerification";
 import * as fs from "node:fs/promises";
 import Handlebars from "handlebars";
 import {env} from "../utils/env"
-import { checkJWT, createJWT } from "../utils/jwt";
-import jwt from "jsonwebtoken";
+import { createJWT } from "../utils/jwt";
 
 const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
 const appDomain = env("APP_DOMAIN");
@@ -53,6 +52,7 @@ export const signup = async (payload: UserType) => {
   //html content of the letter needs to be created --> we call template as a function and pass content
   //and this html goes as verifyEmail.html
   const jwtToken = createJWT(email)
+  console.log(appDomain)
   const html = template({link: `${appDomain}/auth/verify?token=${jwtToken}`})
   const verifyEmail = {
     to: email,
@@ -64,7 +64,12 @@ export const signup = async (payload: UserType) => {
 };
 
 export const verifyUser = async (email: string) => {
-await UsersCollection.findByIdAndUpdate(email, {verify: true})
+const user = await findUserByEmail({email})
+if(!user){
+  throw createHttpError(404, "User not found!")
+}
+const data = await UsersCollection.findByIdAndUpdate(user._id, {verify: true})
+return data;
 };
 
 export const signin = async ({ email, password }: UserType) => {
@@ -93,8 +98,10 @@ export const signin = async ({ email, password }: UserType) => {
 //this request is for authenticate.ts middleware to check if token is valid and exists in one of the sessions
 export const findSession = (filter: { accessToken: string }) =>
   SessionCollection.findOne(filter);
-export const findUser = (filter: { _id: ObjectId }) =>
+export const findUserById = (filter: { _id: ObjectId }) =>
   UsersCollection.findById(filter).lean<AuthUserType>();
+
+const findUserByEmail = (filter: {email: string}) => UsersCollection.findOne(filter)
 
 export const refreshUserSession = async ({
   sessionId,

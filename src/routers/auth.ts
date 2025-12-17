@@ -13,7 +13,7 @@ authRouter.post(
   ctrlWrapper(authControllers.signupController)
 );
 
-authRouter.post("/verify", emailVerificationAuth, ctrlWrapper(authControllers.verifyController))
+authRouter.get("/verify", emailVerificationAuth, ctrlWrapper(authControllers.verifyController))
 authRouter.post("/signin", validateBody(authSignInSchema), ctrlWrapper(authControllers.signinController))
 
 //to read cookies a lib called cookie-parser needs to be installed and used in server

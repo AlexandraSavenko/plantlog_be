@@ -34,15 +34,15 @@ export const signupController = async (req: Request, res: Response) => {
 };
 
 export const verifyController = async (req: Request, res: Response) => {
-  if(!req.userEmail){
-    return createHttpError(400, "Could not verify email")
+  if (!req.userEmail) {
+    return createHttpError(400, "Could not verify email");
   }
-  await authServices.verifyUser(req.userEmail)
+  await authServices.verifyUser(req.userEmail);
   res.json({
     status: 200,
-    message: "User has been verifies"
-  })
-}
+    message: "User has been verifies",
+  });
+};
 
 export const signinController = async (req: Request, res: Response) => {
   const session = await authServices.signin(req.body);
@@ -71,16 +71,15 @@ export const refreshSessionController = async (req: Request, res: Response) => {
 };
 
 export const signoutController = async (req: Request, res: Response) => {
-  const sessionId = req.cookies.sessionId
-if(sessionId){
-  const data = await authServices.signout(sessionId)
-}
-res.clearCookie("sessionId");
-res.clearCookie("refreshToken");
+  const sessionId = req.cookies.sessionId;
+  if (sessionId) {
+    const data = await authServices.signout(sessionId);
+  }
+  res.clearCookie("sessionId");
+  res.clearCookie("refreshToken");
 
-
-res.status(200).json({
-  status: 200,
-  message: "User has been successfully signed out"
-})
-}
+  res.status(200).json({
+    status: 200,
+    message: "User has been successfully signed out",
+  });
+};
