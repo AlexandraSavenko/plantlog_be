@@ -16,6 +16,8 @@ app.use(cors())
 app.use(express.json())
 //it's a lib that needs to be installed to read cookies npm i cookie-parser and npm i -D @types/cookie-parser
 app.use(cookieParser())
+//express by default doesn't give browser files (whatever has extention) but it will give files from the folder in express.static
+app.use(express.static("uploads"))
 
 //creating middleware with object plantsRouter; 
 // first it checks if req.body headers have header called "Content-Type" (should be application/json)

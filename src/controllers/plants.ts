@@ -7,7 +7,10 @@ import { parseSortParams } from "../utils/parseSortParams";
 import { parsePlantsFilterParams } from "../utils/parsePlantsFilterParams";
 import { saveFileToUploadDir } from "../utils/saveFileToUploadDir";
 import * as path from "node:path";
+import { envString } from "../utils/env";
+import { saveFileToCloudinary } from "../utils/saveFileToCloudinary";
 
+const enableCloudinary = envString("ENABLE_CLOUDINARY")
 
 export const getPlantsController = async (req: Request, res: Response) => {
   const {page, perPage} = parsePaginationParams(req.query);
@@ -52,9 +55,16 @@ export const addPlantController = async (req: Request, res: Response) => {
   }
   let photo = null;
   if(req.file){
-    await saveFileToUploadDir(req.file)
+    if(enableCloudinary === "true"){
+      photo = await saveFileToCloudinary(req.file, "plants_photos")
+      return;
+    }else{
+      await saveFileToUploadDir(req.file)
     //now we save relative (not absolute) path to photo variable. We should not save absolute path(with site address) because in case it changes all photos in db will have wrong path
-  photo = path.join("uploads", req.file.filename)
+  // name of the folder "uploads" is not needed because it is written in server in express.static
+    photo = path.join(req.file.filename)
+    }
+    
   }
  const {_id: userId} = req.user;
   const data = await plantsServises.addPlant({...req.body, photo, userId});
