@@ -3,6 +3,9 @@ import { TEMP_DIR } from "../constants/images";
 import createHttpError from "http-errors";
 import { Request } from "express";
 
+//multer middleware is used in routers/plants.ts and with exact name of the field of the file
+
+
 //discstorage is a factory function
 const storage = multer.diskStorage({
   // destination: (req, file, callback) => {
@@ -38,3 +41,4 @@ export const upload = multer({
     limits,
     fileFilter
 })
+

@@ -5,6 +5,8 @@ import { plantAddSchema, plantUpdateSchema } from "../validation/plants";
 import validateBody from "../utils/validateBody";
 import isValidId from "../middlewares/isValidId";
 import { authenticate } from "../middlewares/authenticate";
+import { upload } from "../middlewares/upload";
+
 //!Router is an empty object that saves routes
 // console.log("object plantRouter looks like this:", plantsRouter.stack[1].route)
 //controller is a handler functions as a second argument after a route. 
@@ -22,7 +24,7 @@ plantsRouter.get("/own", authenticate, ctrlWrapper(plantsControllers.getPlantsCo
 
 plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
-plantsRouter.post("/", authenticate, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
+plantsRouter.post("/", upload.single("photo"), authenticate, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
 plantsRouter.put("/:id", authenticate, isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 

@@ -19,7 +19,7 @@ const plantSchema = new Schema(
     },
     photo: {
       type: String,
-      required: [true, "Photo is required"],
+      // required: [true, "Photo is required"],
     },
     growthForm: {
       type: String,
