@@ -92,3 +92,15 @@ res.json({
   }
 })
 }
+
+export const signinWithGoogleController = async (req: Request, res: Response) => {
+const session = await authServices.signInOrUpWithGoogle(req.body.code);
+  setupSession(res, session);
+  res.json({
+    status: 200,
+    message: "Session has been successfully created with google code",
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+}

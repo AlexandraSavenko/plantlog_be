@@ -20,6 +20,7 @@ import { sendEmail } from "../utils/sendEmail";
 // import {env} from "../utils/env"
 import { createJWT } from "../utils/jwt";
 import { createEmail } from "../emails/createEmail";
+import { validateCode } from "../utils/googleOAuth2";
 
 // const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
 // const appDomain = env("APP_DOMAIN");
@@ -121,4 +122,32 @@ export const refreshUserSession = async ({
 export const signout = async (sessionId: string) => {
   //even if there was no session, it can't hurt anyone
 await SessionCollection.deleteOne({_id: sessionId})
+}
+
+export const signInOrUpWithGoogle = async (code: string) => {
+const signTicket = await validateCode(code);
+//information in ticket is hidden so it should be decoded
+const payload = signTicket.getPayload();
+if(!payload){
+  throw createHttpError(401)
+}
+//now sign in vs sign up logics needs to be worked through
+
+let user = await UsersCollection.findOne({
+  email: payload.email
+})
+if(!user){
+  const password = await bcrypt.hash(randomBytes(10).toString("hex"), 10)
+  user = await UsersCollection.create({
+    email: payload.email,
+    username: "",
+    password
+  })
+}
+
+const newSession = await createSession(user._id.toString())
+  return SessionCollection.create({
+    userId: user._id,
+    ...newSession
+  });
 }
