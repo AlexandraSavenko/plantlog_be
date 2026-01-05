@@ -137,10 +137,12 @@ let user = await UsersCollection.findOne({
   email: payload.email
 })
 if(!user){
-  const password = await bcrypt.hash(randomBytes(10).toString("hex"), 10)
+  console.log("not user, user create")
+  const password = await bcrypt.hash(randomBytes(10).toString("hex"), 10);
+  const username = payload.given_name || payload.email?.split("@")[0]
   user = await UsersCollection.create({
     email: payload.email,
-    username: "",
+    username,
     password
   })
 }

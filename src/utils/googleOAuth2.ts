@@ -37,9 +37,19 @@ export const generateAuthUrl = async () => {
 };
 
 export const validateCode = async (code: string) => {
-  const googleOAuthClient = new OAuth2Client();
-  const response = await googleOAuthClient.getToken(code);
-  const token = response.tokens.id_token
+    // console.log("Code", code)
+  const client = await getGoogleOAuthClient();
+//   console.log("Client", client)
+  let response;
+  try {
+   response = await client.getToken(code);
+//   console.log("Response", response) 
+
+  } catch (error) {
+    throw error;
+  }
+  
+  const token = response?.tokens.id_token
   if(!token){
 throw createHttpError(401);
   }
@@ -47,8 +57,9 @@ throw createHttpError(401);
   //jwt.io
   //instead of decoding the token it should be sent to google to get info about user
 
-const ticket = await googleOAuthClient.verifyIdToken({
+const ticket = await client.verifyIdToken({
     idToken: token
 })
+console.log("Valid code here is your ticket", ticket)
 return ticket;
 };
