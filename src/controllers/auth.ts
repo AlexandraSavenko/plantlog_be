@@ -3,6 +3,8 @@ import { Types } from "mongoose";
 import * as authServices from "../services/auth";
 import createHttpError from "http-errors";
 import { Session } from "../types/auth";
+import { generateAuthUrl } from "../utils/googleOAuth2";
+
 
 
 const setupSession = (res: Response, session: Session) => {
@@ -77,3 +79,16 @@ export const signoutController = async (req: Request, res: Response) => {
     message: "User has been successfully signed out",
   });
 };
+
+
+export const getGoogleOAuthURLController = async (req: Request, res: Response) => {
+const url = generateAuthUrl();
+//place everything about google into utilite;
+res.json({
+  status: 200,
+  message: "Successfully get GoogleOAuth",
+  data: {
+    url
+  }
+})
+}

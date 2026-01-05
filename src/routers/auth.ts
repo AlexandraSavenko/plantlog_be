@@ -21,4 +21,6 @@ authRouter.post("/refresh", ctrlWrapper(authControllers.refreshSessionController
 
 authRouter.post("/signout", ctrlWrapper(authControllers.signoutController))
 
+authRouter.get("/get-oauth-url", ctrlWrapper(authControllers.getGoogleOAuthURLController))
+
 export default authRouter;
