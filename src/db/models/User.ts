@@ -1,5 +1,5 @@
 import { CallbackError, Schema, model, Document } from "mongoose";
-import { emailRegex } from "../../constants/users";
+import { authProviderList, emailRegex } from "../../constants/users";
 import {
   applySchemaHooks,
   handleSaveErrorStatus,
@@ -37,6 +37,12 @@ const userSchema = new Schema(
     verify: {
       type: Boolean,
       default: false,
+      required: true,
+    },
+    authProvider: {
+      type: String,
+      enum: authProviderList,
+      default: "local",
       required: true,
     },
   },

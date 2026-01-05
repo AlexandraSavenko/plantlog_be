@@ -4,7 +4,9 @@ export interface UserType {
     username?: string;
     email: string;
     password: string;
-    favorites: Types.ObjectId[]
+    favorites: Types.ObjectId[],
+    verify: boolean,
+    authProvider: "local" | "google"
 }
 
 export interface AuthUserType {

@@ -60,6 +60,6 @@ throw createHttpError(401);
 const ticket = await client.verifyIdToken({
     idToken: token
 })
-console.log("Valid code here is your ticket", ticket)
+// console.log("Valid code here is your ticket", ticket)
 return ticket;
 };
