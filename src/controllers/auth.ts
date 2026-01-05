@@ -82,7 +82,7 @@ export const signoutController = async (req: Request, res: Response) => {
 
 
 export const getGoogleOAuthURLController = async (req: Request, res: Response) => {
-const url = generateAuthUrl();
+const url = await generateAuthUrl();
 //place everything about google into utilite;
 res.json({
   status: 200,
