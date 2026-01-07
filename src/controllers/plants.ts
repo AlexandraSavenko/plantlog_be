@@ -23,7 +23,7 @@ export const getPlantsController = async (req: Request, res: Response) => {
   const data = await plantsServises.getPlants({page, perPage, sortBy, sortOrder, filters});
   res.status(200).json({
     status: 200,
-    message: "Plantlog the best",
+    message: "Successfully fetched plant list",
     data,
   });
 };

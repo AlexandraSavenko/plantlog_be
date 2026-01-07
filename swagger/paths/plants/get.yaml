@@ -1,0 +1,28 @@
+tags:
+  - Plants
+summary: Get all plants
+operationId: getAllPlants
+description: Returns a list of all plants available to users
+security: []
+parameters: 
+  - name: growthForm
+    in:  query
+    schema:
+      type: string
+      enum: [tree, shrub, herb, grass, vine, succulent, fern, moss]
+    description: Filter plants by growth form
+responses:
+  '200':
+    description: 'Successfully fetched plant list'
+    content:
+      application/json:
+        schema:
+          type: array
+          required:
+            - status
+            - message
+            - data
+          items:
+            $ref: '#/components/schemas/plant'
+  '500':
+    description: Server error

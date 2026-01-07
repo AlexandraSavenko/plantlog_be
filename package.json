@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run build-docs",
     "start": "node dist/index.ts",
-    "dev": "nodemon --exec \"npx ts-node --files\" src/index.ts"
+    "dev": "nodemon --exec \"npx ts-node --files\" src/index.ts",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/AlexandraSavenko/plantlog_be#readme",
   "dependencies": {
+    "@redocly/cli": "^2.14.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.0.0",
     "@types/nodemailer": "^7.0.4",
