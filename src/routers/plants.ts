@@ -24,7 +24,7 @@ plantsRouter.get("/own", authenticate, ctrlWrapper(plantsControllers.getPlantsCo
 
 plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
-plantsRouter.post("/", upload.single("photo"), authenticate, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
+plantsRouter.post("/", authenticate, upload.single("photo"), validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
 plantsRouter.put("/:id", authenticate, isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 

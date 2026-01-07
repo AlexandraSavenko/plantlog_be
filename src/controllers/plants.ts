@@ -53,18 +53,18 @@ export const addPlantController = async (req: Request, res: Response) => {
   if(!req.user){
     throw createHttpError(401, "User not authenticated");
   }
+  // console.log("AddPlantController", req.file)
+  
   let photo = null;
   if(req.file){
     if(enableCloudinary === "true"){
       photo = await saveFileToCloudinary(req.file, "plants_photos")
-      return;
     }else{
       await saveFileToUploadDir(req.file)
     //now we save relative (not absolute) path to photo variable. We should not save absolute path(with site address) because in case it changes all photos in db will have wrong path
   // name of the folder "uploads" is not needed because it is written in server in express.static
     photo = path.join(req.file.filename)
     }
-    
   }
  const {_id: userId} = req.user;
   const data = await plantsServises.addPlant({...req.body, photo, userId});
