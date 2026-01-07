@@ -1,40 +1,27 @@
-type: object
-required:
-  - name
-  - description
-  - growthForm
-  - origin
-  - userId
-properties:
-  _id:
-    type: string
-    example: '65a1f9e2b1234567890abcd'
-  name:
-    type: string
-    example: "Ромашка"
-  description:
-    type: string
-    example: "Квітка має жовту серединку та білі лепестки"
-  photo: 
-    type: string
-  growthForm:
-    type: string
-    enum:
-      - tree
-      - shrub
-      - herb
-      - grass
-      - vine
-      - succulent
-      - fern
-      - moss
-    example: "herb"
-  origin:
-    type: string
-    enum:
-      - wild
-      - cultivated
-    example: "wild"
-  userId:
-    type: string
-    example: '65a1f9e2b1234567890aada'
+components:
+  schemas:
+    plant:
+      type: object
+      required:
+        - name
+        - description
+        - growthForm
+        - origin
+        - userId
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        photo:
+          type: string
+        growthForm:
+          type: string
+          enum: [tree, shrub, herb, grass, vine, succulent, fern, moss]
+        origin:
+          type: string
+          enum: [wild, cultivated]
+        userId:
+          type: string
