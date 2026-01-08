@@ -29,11 +29,11 @@ const user = await UsersCollection.findById(userId);
 if(!user){
   throw createHttpError(404, "Unauthorized")
 }
-const objectId = new Types.ObjectId(plantId)
-const index = user.favoritePlants.findIndex(id => id.equals(objectId))
+const objectPlantId = new Types.ObjectId(plantId)
+const index = user.favoritePlants.findIndex(id => id.equals(objectPlantId))
 if(index === -1){
-  user.favoritePlants.push(objectId)
-}else{user.favoritePlants.slice(index, 1)}
+  user.favoritePlants.push(objectPlantId)
+}else{user.favoritePlants.splice(index, 1)}
 await user.save();
 return user.favoritePlants
 }
