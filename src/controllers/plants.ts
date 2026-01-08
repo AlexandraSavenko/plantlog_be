@@ -75,6 +75,14 @@ export const addPlantController = async (req: Request, res: Response) => {
   });
 };
 
+export const addFavoritePlantController = async (req: Request, res: Response) => {
+  const result = await plantsServises.togglePlantFavorite(req.params.plantId, req.user._id)
+res.status(201).json({
+  status: 201,
+  message: 'Recipe added to favorites',
+  data: result
+})
+}
 export const upsertPlantController = async (req: Request, res: Response) => {
   //------------------------------------------
   if (!req.body || Object.keys(req.body).length === 0) {

@@ -1,0 +1,31 @@
+type: object
+required:
+  - _id
+  - username
+  - email
+  - password
+  - favorites
+  - verify
+  - authProvider
+properties:
+  _id:
+    type: string
+    description: Users id
+    example: 68ac2873b0640ef82fb32038
+  username:
+    type: string
+    description: User's name
+    example: Peter Parker
+  email:
+    type: string
+    maxLength: 128
+    pattern: /.+@.+\..+/
+    description: User's email
+    example: some.email@gmail.com
+  favoritePlants:
+    type: array
+    items:
+      type: string
+      format: Mongo ObjectId
+      example:
+        - 68ac425c67bf894ba7634759

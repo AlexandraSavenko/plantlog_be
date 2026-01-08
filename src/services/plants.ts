@@ -2,6 +2,8 @@ import createHttpError from "http-errors";
 import PlantCollection from "../db/models/Plant";
 import { plantType, SortOrderType, upsertPlantParams } from "../types/plants";
 import { calculatePaginationData } from "../utils/calculatePaginationData";
+import UsersCollection from "../db/models/User";
+import { Types } from "mongoose";
 
 
 // Mongoose queries are then-able thus they return Promise-like object.
@@ -21,6 +23,20 @@ export const getPlants = async ({page = 1, perPage = 10, sortBy = "_id", sortOrd
 export const getPlantById = (id: string) => PlantCollection.findById(id);
 
 export const addPlant = (payload: plantType) => PlantCollection.create(payload);
+
+export const togglePlantFavorite = async (plantId: string, userId: Types.ObjectId) => {
+const user = await UsersCollection.findById(userId);
+if(!user){
+  throw createHttpError(404, "Unauthorized")
+}
+const objectId = new Types.ObjectId(plantId)
+const index = user.favoritePlants.findIndex(id => id.equals(objectId))
+if(index === -1){
+  user.favoritePlants.push(objectId)
+}else{user.favoritePlants.slice(index, 1)}
+await user.save();
+return user.favoritePlants
+}
 
 export const updatePlant = async ({
   userId,

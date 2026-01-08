@@ -7,7 +7,6 @@ export const emailVerificationAuth = (
   next: NextFunction
 ) => {
   const { token } = req.query;
-console.log("emailVerification has token", token)
   if (typeof token !== "string") {
     return res.status(400).json({
       status: 400,

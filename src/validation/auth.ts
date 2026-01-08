@@ -5,7 +5,7 @@ export const authSignUpSchema = Joi.object({
     username: Joi.string().required().messages({
         "string.empty": "name should not be empty string"
     }),
-    email: Joi.string().pattern(emailRegex).required(),
+    email: Joi.string().pattern(emailRegex).max(128).required(),
     password: Joi.string().min(6).required().messages({
         "string.empty": "password should not be empty string"
     })
