@@ -38,6 +38,14 @@ await user.save();
 return user.favoritePlants
 }
 
+export const getUserFavorites = async (userId: Types.ObjectId) => {
+  const user = await UsersCollection.findById(userId);
+if(!user){
+  throw createHttpError(404, "Unauthorized")
+}
+return user.favoritePlants
+}
+
 export const updatePlant = async ({
   userId,
   _id,

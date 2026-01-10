@@ -75,7 +75,16 @@ export const addPlantController = async (req: Request, res: Response) => {
   });
 };
 
-export const addFavoritePlantController = async (req: Request, res: Response) => {
+export const getUserFavorites = async (req: Request, res: Response) => {
+const result = await plantsServises.getUserFavorites(req.user._id)
+res.status(200).json({
+  status: 200,
+  message: "Here's you list of favorites",
+  data: result
+})
+}
+
+export const toggleFavoritePlantController = async (req: Request, res: Response) => {
   const result = await plantsServises.togglePlantFavorite(req.params.id, req.user._id)
 res.status(201).json({
   status: 201,

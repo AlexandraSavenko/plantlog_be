@@ -1,0 +1,39 @@
+tags:
+  - Plants
+summary: Get user's own plants (private)
+operationId: getOwnPlants
+description: Returns a list of all plants created by a user
+security: 
+  - bearerAuth: []
+parameters: 
+  - name: growthForm
+    in:  query
+    schema:
+      type: string
+      enum: [tree, shrub, herb, grass, vine, succulent, fern, moss]
+    description: Filter plants by growth form
+  - name: origin
+    in: query
+    schema:
+      type: string
+      enum: [wild, cultivated]
+    description: Filter plant by origin
+responses:
+  '200':
+    description: 'Successfully fetched plant list'
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [status, message, data]
+          properties:
+            status:
+              type: integer
+            message:
+              type: string
+            data:
+              type: array
+              items:
+                $ref: ../../components/schemas/plant.yaml#/components/schemas/plant
+  '500':
+    description: Server error

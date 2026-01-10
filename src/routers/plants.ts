@@ -26,7 +26,8 @@ plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdCo
 
 plantsRouter.post("/", authenticate, upload.single("photo"), validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
-plantsRouter.post("/favorites/:id", authenticate, isValidId, ctrlWrapper(plantsControllers.addFavoritePlantController))
+plantsRouter.get("/favorites", authenticate, ctrlWrapper(plantsControllers.getUserFavorites))
+plantsRouter.post("/favorites/:id", authenticate, isValidId, ctrlWrapper(plantsControllers.toggleFavoritePlantController))
 plantsRouter.put("/:id", authenticate, isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 
 plantsRouter.patch("/:id", authenticate, isValidId, validateBody(plantUpdateSchema), ctrlWrapper(plantsControllers.patchPlantController))

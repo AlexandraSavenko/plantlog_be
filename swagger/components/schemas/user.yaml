@@ -3,14 +3,13 @@ required:
   - _id
   - username
   - email
-  - password
-  - favorites
+  - favoritePlants
   - verify
   - authProvider
 properties:
   _id:
     type: string
-    description: Users id
+    description: UsersId (MongoDB ObjectId)
     example: 68ac2873b0640ef82fb32038
   username:
     type: string
@@ -19,13 +18,23 @@ properties:
   email:
     type: string
     maxLength: 128
-    pattern: /.+@.+\..+/
-    description: User's email
-    example: some.email@gmail.com
+    pattern: .+@.+\..+
   favoritePlants:
     type: array
     items:
       type: string
-      format: Mongo ObjectId
-      example:
-        - 68ac425c67bf894ba7634759
+      format: PlantId (Mongo ObjectId)
+  verify:
+    type: boolean
+    description: changes to true after user has verified their account via email
+  authProvider:
+    type: string
+    enum: [local, google]
+  createdAt:
+    type: string
+    format: date-time
+    example: 2025-08-25T09:10:11.565Z
+  updatedAt:
+    type: string
+    format: date-time
+    example: 2025-08-25T18:40:46.577Z
