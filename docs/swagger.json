@@ -100,6 +100,63 @@
             "description": "Server error"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Create a new plant file (private)",
+        "operationId": "createRecipe",
+        "description": "Allows creating a plant file with a photo, description, growthForm and origin. Authorization is required.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/plantCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recipe created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a plant file!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/plant"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
       }
     },
     "/plants/own": {
@@ -304,6 +361,7 @@
       "plant": {
         "type": "object",
         "required": [
+          "_id",
           "name",
           "description",
           "growthForm",
@@ -312,7 +370,9 @@
         ],
         "properties": {
           "_id": {
-            "type": "string"
+            "type": "string",
+            "format": "mongo-ObjectId",
+            "example": "665123abc321cc0011aa23ef"
           },
           "name": {
             "type": "string"
@@ -344,12 +404,75 @@
             ]
           },
           "userId": {
+            "type": "string",
+            "format": "mongo-ObjectId",
+            "example": "665123abc321cc0011aa23ef"
+          }
+        }
+      },
+      "plantCreate": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "growthForm",
+          "origin"
+        ],
+        "properties": {
+          "name": {
             "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "growthForm": {
+            "type": "string",
+            "enum": [
+              "tree",
+              "shrub",
+              "herb",
+              "grass",
+              "vine",
+              "succulent",
+              "fern",
+              "moss"
+            ]
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "wild",
+              "cultivated"
+            ]
+          },
+          "photo": {
+            "type": "string",
+            "format": "binary"
           }
         }
       }
     },
     "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad Request"
+                }
+              }
+            }
+          }
+        }
+      },
       "401": {
         "description": "UnauthorizedError",
         "content": {

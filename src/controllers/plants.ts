@@ -70,7 +70,7 @@ export const addPlantController = async (req: Request, res: Response) => {
   const data = await plantsServises.addPlant({...req.body, photo, userId});
   res.status(201).json({
     status: 201,
-    message: "Success",
+    message: "Successfully created a plant file",
     data,
   });
 };
@@ -88,8 +88,8 @@ export const toggleFavoritePlantController = async (req: Request, res: Response)
   const result = await plantsServises.togglePlantFavorite(req.params.id, req.user._id)
 res.status(201).json({
   status: 201,
-  message: 'Recipe added to favorites',
-  data: result
+  message: `Plant id ${result.action} to favorites`,
+  data: result.data
 })
 }
 export const upsertPlantController = async (req: Request, res: Response) => {

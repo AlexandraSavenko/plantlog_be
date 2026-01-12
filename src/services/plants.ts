@@ -31,11 +31,15 @@ if(!user){
 }
 const objectPlantId = new Types.ObjectId(plantId)
 const index = user.favoritePlants.findIndex(id => id.equals(objectPlantId))
+let action
 if(index === -1){
+  action = "add"
   user.favoritePlants.push(objectPlantId)
-}else{user.favoritePlants.splice(index, 1)}
+}else{
+  action = "delete"
+  user.favoritePlants.splice(index, 1)}
 await user.save();
-return user.favoritePlants
+return {data: user.favoritePlants, action}
 }
 
 export const getUserFavorites = async (userId: Types.ObjectId) => {

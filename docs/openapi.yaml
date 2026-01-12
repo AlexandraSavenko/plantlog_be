@@ -18,6 +18,8 @@ paths:
   /plants:
     get: 
       $ref: ../swagger/paths/plants/getAll.yaml
+    post:
+      $ref: ../swagger/paths/plants/postPlant.yaml
   /plants/own:
     get: 
       $ref: ../swagger/paths/plants/getOwn.yaml

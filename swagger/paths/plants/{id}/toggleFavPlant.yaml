@@ -1,0 +1,29 @@
+tags:
+  - Plants
+summary: Add or delete a plant id from a list of favorites (private)
+operationId: toggleFav
+description: Allows adding or deleting a plant file to or from the list of favorites.
+security:
+  - bearerAuth: []
+responses:
+  '201':
+    description: Recipe created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a plant file!
+            data:
+              $ref: ../../components/schemas/plant.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

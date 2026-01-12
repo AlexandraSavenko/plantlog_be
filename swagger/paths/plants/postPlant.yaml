@@ -1,0 +1,35 @@
+tags:
+  - Plants
+summary: Create a new plant file (private)
+operationId: createPlantFile
+description: Allows creating a plant file with a photo, description, growthForm and origin. Authorization is required.
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: ../../components/schemas/plantCreate.yaml 
+responses:
+  '201':
+    description: Recipe created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a plant file!
+            data:
+              $ref: ../../components/schemas/plant.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

@@ -1,21 +1,13 @@
       type: object
       required:
-        - _id
         - name
         - description
         - growthForm
         - origin
-        - userId
       properties:
-        _id:
-          type: string
-          format: mongo-ObjectId
-          example: 665123abc321cc0011aa23ef
         name:
           type: string
         description:
-          type: string
-        photo:
           type: string
         growthForm:
           type: string
@@ -23,7 +15,6 @@
         origin:
           type: string
           enum: [wild, cultivated]
-        userId:
+        photo:
           type: string
-          format: mongo-ObjectId
-          example: 665123abc321cc0011aa23ef
+          format: binary
