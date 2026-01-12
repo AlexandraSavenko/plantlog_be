@@ -1,0 +1,43 @@
+tags:
+  - Plants
+summary: Update plant file by id
+operationId: updatePlant
+description: 'Update plant file by id'
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: ../../../components/schemas/plantCreate.yaml 
+responses:
+  '200':
+    description: 'Patch plant file by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Plant with this name has been updated
+            data:
+              type: object
+              $ref: '../../../components/schemas/plantCreate.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: ../../../components/responses/500.yaml

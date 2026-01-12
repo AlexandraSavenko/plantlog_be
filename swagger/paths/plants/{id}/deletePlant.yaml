@@ -1,0 +1,23 @@
+tags:
+  - Plants
+summary: Delete plant file by id
+operationId: deletePlant
+description: 'Delete Plant file by id'
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+responses:
+  '204':
+    description: 'Plant with this name has been deleted'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: ../../../components/responses/500.yaml

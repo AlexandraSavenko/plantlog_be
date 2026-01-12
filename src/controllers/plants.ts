@@ -88,7 +88,7 @@ export const toggleFavoritePlantController = async (req: Request, res: Response)
   const result = await plantsServises.togglePlantFavorite(req.params.id, req.user._id)
 res.status(201).json({
   status: 201,
-  message: `Plant id ${result.action} to favorites`,
+  message: `Plant id ${result.action}`,
   data: result.data
 })
 }

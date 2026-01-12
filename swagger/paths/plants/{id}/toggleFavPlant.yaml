@@ -18,12 +18,16 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully created a plant file!
+              example: Plant id added/deleted
             data:
-              $ref: ../../components/schemas/plant.yaml
-  '400':
-    $ref: ../../components/responses/400.yaml
+              type: array
+              items:
+                type: string
+                format: mongo-ObjectId
+                example: 68ac425c67bf894ba7634759
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
   '500':
-    $ref: ../../components/responses/500.yaml
+    $ref: ../../../components/responses/500.yaml

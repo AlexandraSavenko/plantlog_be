@@ -26,9 +26,15 @@ paths:
   /plants/favorites:
     get: 
       $ref: ../swagger/paths/plants/getUserFav.yaml
+    post:
+      $ref: ../swagger/paths/plants/{id}/toggleFavPlant.yaml
   /plants/{id}:
     get: 
       $ref: ../swagger/paths/plants/{id}/getPlantById.yaml
+    patch: 
+      $ref: ../swagger/paths/plants/{id}/patchPlant.yaml
+    delete: 
+      $ref: ../swagger/paths/plants/{id}/deletePlant.yaml
 components:
   securitySchemes:
     bearerAuth:
