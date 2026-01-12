@@ -26,7 +26,7 @@ paths:
       $ref: ../swagger/paths/plants/getUserFav.yaml
   /plants/{id}:
     get: 
-      $ref: ../swagger/paths/plants/getPlantById.yaml
+      $ref: ../swagger/paths/plants/{id}/getPlantById.yaml
 components:
   securitySchemes:
     bearerAuth:

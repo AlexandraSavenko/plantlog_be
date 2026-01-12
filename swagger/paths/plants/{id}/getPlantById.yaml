@@ -28,8 +28,8 @@ responses:
               type: string
               example: Plant with this is here
             data:
-              $ref: ../../components/schemas/plant.yaml
+              $ref: ../../../components/schemas/plant.yaml
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: ../../../components/responses/401.yaml
   '500':
-    $ref: ../../components/responses/500.yaml
+    $ref: ../../../components/responses/500.yaml
