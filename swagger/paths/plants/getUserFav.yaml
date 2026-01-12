@@ -1,0 +1,30 @@
+tags:
+  - Plants
+summary: Get a list of user's favorite plants' ids (private)
+operationId: getFavPlants
+description: Returns a list of ids of plants that users marked as favorites
+security: 
+  - bearerAuth: []
+responses:
+  '200':
+    description: "Here's you list of favorites"
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [status, message, data]
+          properties:
+            status:
+              type: integer
+            message:
+              type: string
+            data:
+              type: array
+              items:
+                type: string
+                format: mongo-ObjectId
+                example: 68ac425c67bf894ba7634759
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

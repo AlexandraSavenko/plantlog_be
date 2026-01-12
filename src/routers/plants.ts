@@ -21,12 +21,12 @@ plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
 //it's vital to keep /own before /:id otherwise it would treat /own --> /:id for it reads from top to bottom
 plantsRouter.get("/own", authenticate, ctrlWrapper(plantsControllers.getPlantsController))
+plantsRouter.get("/favorites", authenticate, ctrlWrapper(plantsControllers.getUserFavorites))
 
 plantsRouter.get("/:id", isValidId, ctrlWrapper(plantsControllers.getPlantByIdController))
 
 plantsRouter.post("/", authenticate, upload.single("photo"), validateBody(plantAddSchema), ctrlWrapper(plantsControllers.addPlantController))
 
-plantsRouter.get("/favorites", authenticate, ctrlWrapper(plantsControllers.getUserFavorites))
 plantsRouter.post("/favorites/:id", authenticate, isValidId, ctrlWrapper(plantsControllers.toggleFavoritePlantController))
 plantsRouter.put("/:id", authenticate, isValidId, validateBody(plantAddSchema), ctrlWrapper(plantsControllers.upsertPlantController))
 

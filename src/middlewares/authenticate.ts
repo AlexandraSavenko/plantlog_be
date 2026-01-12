@@ -4,7 +4,7 @@ import createHttpError from "http-errors";
 import { findSession, findUserById } from "../services/auth";
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => { 
-const authHeader = req.get("Authorization");
+    const authHeader = req.get("Authorization");
 if(!authHeader){
     //throw error won't work here because we don't wrap this function in ctrlWrapper so throwing error will crash backend
     //authenticate could be wrapped in ctrlWrapper but with editional difficulties ???

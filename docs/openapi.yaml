@@ -14,11 +14,19 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
 paths:
   /plants:
     get: 
-      $ref: ../swagger/paths/plants/get.yaml
+      $ref: ../swagger/paths/plants/getAll.yaml
+  /plants/own:
+    get: 
+      $ref: ../swagger/paths/plants/getOwn.yaml
+  /plants/favorites:
+    get: 
+      $ref: ../swagger/paths/plants/getUserFav.yaml
+  /plants/{id}:
+    get: 
+      $ref: ../swagger/paths/plants/getPlantById.yaml
 components:
   securitySchemes:
     bearerAuth:

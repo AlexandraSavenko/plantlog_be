@@ -34,6 +34,6 @@ responses:
             data:
               type: array
               items:
-                $ref: ../../components/schemas/plant.yaml#/components/schemas/plant
+                $ref: ../../components/schemas/plant.yaml
   '500':
     description: Server error

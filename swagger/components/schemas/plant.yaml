@@ -1,6 +1,3 @@
-components:
-  schemas:
-    plant:
       type: object
       required:
         - name

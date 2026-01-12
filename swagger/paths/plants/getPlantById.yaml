@@ -5,7 +5,7 @@ operationId: getId
 description: Returns info about a single plant created by the user, based on its unique identifier.
 security: []
 parameters:
-  - name: plantId
+  - name: id
     in: path
     required: true
     description: Unique identifier of the plant

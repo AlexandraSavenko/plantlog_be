@@ -76,7 +76,7 @@ export const addPlantController = async (req: Request, res: Response) => {
 };
 
 export const getUserFavorites = async (req: Request, res: Response) => {
-const result = await plantsServises.getUserFavorites(req.user._id)
+  const result = await plantsServises.getUserFavorites(req.user._id)
 res.status(200).json({
   status: 200,
   message: "Here's you list of favorites",
