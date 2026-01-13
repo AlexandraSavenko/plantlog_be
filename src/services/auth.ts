@@ -21,6 +21,7 @@ import { sendEmail } from "../utils/sendEmail";
 import { createJWT } from "../utils/jwt";
 import { createEmail } from "../emails/createEmail";
 import { validateCode } from "../utils/googleOAuth2";
+import { TEMPLATE_DIR } from "../constants/emailVerification";
 
 // const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
 // const appDomain = env("APP_DOMAIN");
@@ -52,7 +53,7 @@ export const signup = async (payload: UserType) => {
   });
 
   const jwtToken = createJWT(email);
-  const verifyEmail = await createEmail(email, jwtToken);
+  const verifyEmail = await createEmail(email, jwtToken, "verify-email.html");
   await sendEmail(verifyEmail);
   return newUser;
 };
@@ -131,6 +132,16 @@ export const signout = async (sessionId: string) => {
   await SessionCollection.deleteOne({ _id: sessionId });
 };
 
+export const requestResetToken = async (email: string) => {
+const user = await UsersCollection.findOne({email});
+if(!user){
+  throw createHttpError(404, 'User not found')
+}
+
+const resetToken = createJWT(email)
+
+const resetPasswordTemplatePath = createEmail(email, resetToken, 'reset-password-email.html')
+}
 export const signInOrUpWithGoogle = async (code: string) => {
   const signTicket = await validateCode(code);
   //information in ticket is hidden so it should be decoded

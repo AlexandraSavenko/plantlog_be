@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as authControllers from "../controllers/auth";
 import ctrlWrapper from "../utils/ctrlWrapper";
-import { authOAuthGoogleSchema, authSignInSchema, authSignUpSchema } from "../validation/auth";
+import { authOAuthGoogleSchema, authSignInSchema, authSignUpSchema, requestResetEmailSchema } from "../validation/auth";
 import validateBody from "../utils/validateBody";
 import { emailVerificationAuth } from "../middlewares/emailVerificationAuth";
 
@@ -21,6 +21,7 @@ authRouter.post("/refresh", ctrlWrapper(authControllers.refreshSessionController
 
 authRouter.post("/signout", ctrlWrapper(authControllers.signoutController))
 
+authRouter.post('send-reset-email', validateBody(requestResetEmailSchema), ctrlWrapper(authControllers.requestResetEmailController))
 authRouter.get("/get-oauth-url", ctrlWrapper(authControllers.getGoogleOAuthURLController))
 
 authRouter.post("/confirm-oauth", validateBody(authOAuthGoogleSchema), ctrlWrapper(authControllers.signinWithGoogleController))

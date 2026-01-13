@@ -16,6 +16,11 @@ export const authSignInSchema = Joi.object({
     password: Joi.string().required()
 });
 
+//pattern(emailRegex) is needed here?
+export const requestResetEmailSchema = Joi.object({
+    email: Joi.string().email().required()
+})
+
 export const authOAuthGoogleSchema = Joi.object({
     code: Joi.string().required()
 });
