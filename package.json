@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc && npm run build-docs",
-    "start": "node dist/index.ts",
+    "start": "node dist/index.js",
     "dev": "nodemon --exec \"npx ts-node --files\" src/index.ts",
     "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
     "preview-docs": "redocly preview-docs"
