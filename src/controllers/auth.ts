@@ -84,7 +84,16 @@ export const requestResetEmailController = async (req: Request, res: Response) =
   await authServices.requestResetToken(req.body.email)
   res.json({
     status: 200,
-    message: "Password has been successfully reset"
+    message: "An email has been sent to given mailbox"
+  })
+}
+
+export const resetPasswordController = async (req: Request, res: Response) => {
+const {token, newPassword} = req.body
+  await authServices.resetPassword({token, newPassword});
+  res.json({
+    status: 200,
+    message: `Password has been successfully changed to ${newPassword}`
   })
 }
 

@@ -21,6 +21,12 @@ export const requestResetEmailSchema = Joi.object({
     email: Joi.string().email().required()
 })
 
+export const resetPasswordSchema = Joi.object({
+    newPassword: Joi.string().min(6).required().messages({
+        "string.empty": "password should not be empty string"
+    }),
+    token: Joi.string().required()
+})
 export const authOAuthGoogleSchema = Joi.object({
     code: Joi.string().required()
 });

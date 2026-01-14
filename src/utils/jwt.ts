@@ -7,6 +7,11 @@ const jwtSecret = envString("JWT_SECRET");
 
 export const createJWT = (email: string) => {
   return jwt.sign({ email }, jwtSecret, { expiresIn: "24h" });
+  //as an option user._id could be added to token in subject: jwt.sign(
+//   { email: user.email },
+//   jwtSecret,
+//   { subject: user._id.toString(), expiresIn: '1h' }
+// );
 };
 
 export const checkJWT = (token: string): EmailTokenPayload => {

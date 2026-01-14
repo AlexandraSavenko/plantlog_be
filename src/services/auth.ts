@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import UsersCollection from "../db/models/User";
-import { AuthUserType, UserType } from "../types/auth";
+import { AuthUserType, ResetPassword, UserType } from "../types/auth";
 import bcrypt from "bcryptjs";
 import SessionCollection from "../db/models/Session";
 //crypto is express built-in;
@@ -18,7 +18,7 @@ import { sendEmail } from "../utils/sendEmail";
 // import * as fs from "node:fs/promises";
 // import Handlebars from "handlebars";
 // import {env} from "../utils/env"
-import { createJWT } from "../utils/jwt";
+import { checkJWT, createJWT } from "../utils/jwt";
 import { createEmail } from "../emails/createEmail";
 import { validateCode } from "../utils/googleOAuth2";
 import { TEMPLATE_DIR } from "../constants/emailVerification";
@@ -145,6 +145,21 @@ const resetToken = createJWT(email)
 const resetPasswordEmail = await createEmail(email, {link: `${appDomain}/auth/reset-password?token=${resetToken}`}, 'reset-password-email.html');
 await sendEmail(resetPasswordEmail)
 }
+
+export const resetPassword = async ({token, newPassword}: ResetPassword) => {
+const {email} = checkJWT(token);
+// console.log("resetPassword entries", entries) --> resetPassword entries { email: 'sashasavenko3@ukr.net', iat: 1768396897, exp: 1768483297 }
+const user = await UsersCollection.findOne({ email })
+if(!user){
+  throw createHttpError(404, "User not found");
+}
+const hashPassword = await bcrypt.hash(newPassword, 10);
+  await UsersCollection.updateOne(
+    {_id: user?._id}, {password: hashPassword}
+  ) 
+}
+
+
 export const signInOrUpWithGoogle = async (code: string) => {
   const signTicket = await validateCode(code);
   //information in ticket is hidden so it should be decoded

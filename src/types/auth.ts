@@ -26,3 +26,9 @@ export interface Session {
 }
 
 export type EmailTemplate = "verify-email.html" | "reset-password-email.html"
+
+//used in services/auth.ts resetPassword
+export interface ResetPassword {
+    token: string;
+    newPassword: string;
+}
