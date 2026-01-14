@@ -24,3 +24,5 @@ export interface Session {
   accessTokenValidUntil: Date;
   refreshTokenValidUntil: Date;
 }
+
+export type EmailTemplate = "verify-email.html" | "reset-password-email.html"

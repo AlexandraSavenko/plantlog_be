@@ -35,5 +35,5 @@ const email = {
 //async await is useless without trycatch, there's no point wait if you don't catch errors, but the call could be await (authServices.signup)
 export const sendEmail = (data: SendEmailProps) => {
     const email = {...data, from: UKR_NET_FROM};
-    return transporter.sendMail(email).then(() => console.log("Email send successfully"))
+    return transporter.sendMail(email).then(() => console.log("Email has been sent successfully"))
 }

@@ -82,6 +82,10 @@ export const signoutController = async (req: Request, res: Response) => {
 
 export const requestResetEmailController = async (req: Request, res: Response) => {
   await authServices.requestResetToken(req.body.email)
+  res.json({
+    status: 200,
+    message: "Password has been successfully reset"
+  })
 }
 
 export const getGoogleOAuthURLController = async (req: Request, res: Response) => {

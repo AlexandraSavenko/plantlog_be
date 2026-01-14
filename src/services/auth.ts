@@ -22,6 +22,9 @@ import { createJWT } from "../utils/jwt";
 import { createEmail } from "../emails/createEmail";
 import { validateCode } from "../utils/googleOAuth2";
 import { TEMPLATE_DIR } from "../constants/emailVerification";
+import { env } from "../utils/env";
+const appDomain = env("APP_DOMAIN");
+//console.log(emailTemplatePath) --> D:\Projects\plantlog_be\src\templates\verify-email.html
 
 // const emailTemplatePath = path.join(TEMPLATE_DIR, "verify-email.html")
 // const appDomain = env("APP_DOMAIN");
@@ -53,7 +56,7 @@ export const signup = async (payload: UserType) => {
   });
 
   const jwtToken = createJWT(email);
-  const verifyEmail = await createEmail(email, jwtToken, "verify-email.html");
+  const verifyEmail = await createEmail(email, {link: `${appDomain}/auth/verify?token=${jwtToken}`}, "verify-email.html");
   await sendEmail(verifyEmail);
   return newUser;
 };
@@ -139,8 +142,8 @@ if(!user){
 }
 
 const resetToken = createJWT(email)
-
-const resetPasswordTemplatePath = createEmail(email, resetToken, 'reset-password-email.html')
+const resetPasswordEmail = await createEmail(email, {link: `${appDomain}/auth/reset-password?token=${resetToken}`}, 'reset-password-email.html');
+await sendEmail(resetPasswordEmail)
 }
 export const signInOrUpWithGoogle = async (code: string) => {
   const signTicket = await validateCode(code);

@@ -21,7 +21,7 @@ authRouter.post("/refresh", ctrlWrapper(authControllers.refreshSessionController
 
 authRouter.post("/signout", ctrlWrapper(authControllers.signoutController))
 
-authRouter.post('send-reset-email', validateBody(requestResetEmailSchema), ctrlWrapper(authControllers.requestResetEmailController))
+authRouter.post('/send-reset-email', validateBody(requestResetEmailSchema), ctrlWrapper(authControllers.requestResetEmailController))
 authRouter.get("/get-oauth-url", ctrlWrapper(authControllers.getGoogleOAuthURLController))
 
 authRouter.post("/confirm-oauth", validateBody(authOAuthGoogleSchema), ctrlWrapper(authControllers.signinWithGoogleController))
