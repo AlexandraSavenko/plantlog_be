@@ -35,6 +35,33 @@ paths:
       $ref: ../swagger/paths/plants/{id}/patchPlant.yaml
     delete: 
       $ref: ../swagger/paths/plants/{id}/deletePlant.yaml
+  /auth/signup:
+    post:
+      $ref: ../swagger/paths/auth/signUp/post.yaml
+  /auth/signin:
+    post:
+      $ref: ../swagger/paths/auth/signIn/post.yaml
+  /auth/verify:
+    get:
+      $ref: ../swagger/paths/auth/verify/get.yaml
+  /auth/signout:
+    post:
+      $ref: ../swagger/paths/auth/signout/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
+  /auth/resetPasswordEmail:
+    post:
+      $ref: ../swagger/paths/auth/resetPasswordEmail/post.yaml
+  /auth/resetPsw:
+    post:
+      $ref: ../swagger/paths/auth/resetPsw/post.yaml
+  /auth/getOAuthURL:
+    get:
+      $ref: ../swagger/paths/auth/getOAuthURL/get.yaml
+  /auth/confirm-oauth:
+    post:
+      $ref: ../swagger/paths/auth/confirm-oauth/get.yaml
 components:
   securitySchemes:
     bearerAuth:

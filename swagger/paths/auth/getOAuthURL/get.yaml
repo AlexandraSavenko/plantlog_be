@@ -1,0 +1,25 @@
+tags:
+  - Auth
+summary: get Google URL to sign up User 
+operationId: oauthURL
+description: get url which will allow user ot sign up with google account
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: token
+    required: true
+    schema:
+      type: string
+      example: some-verification-token
+responses:
+  '200':
+    description: OAuth authorization URL
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri

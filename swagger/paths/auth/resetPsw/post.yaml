@@ -1,0 +1,30 @@
+tags:
+  - Auth
+summary: Reset Password
+operationId: resetPassword
+description: Set a new password using reset token
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - token
+          - password
+        properties:
+          token:
+            type: string
+            example: reset-token
+          password:
+            type: string
+            example: NewSecurePassword123
+responses:
+  '200':
+    description: Password has been successfully changed to new password
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '404':
+    $ref: ../../../components/responses/401.yaml

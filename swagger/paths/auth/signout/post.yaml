@@ -1,0 +1,12 @@
+tags:
+  - Auth
+summary: Signout User
+operationId: signoutUser
+description: Invalidate user session and revoke refresh token.
+security:
+  - bearerAuth: []
+responses:
+  '204':
+    description: User has been successfully signed out
+  '401':
+    $ref: '../../../components/responses/401.yaml'

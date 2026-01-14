@@ -1,0 +1,21 @@
+tags:
+  - Auth
+summary: Verify User Email
+operationId: verifyEmail
+description: Confirms user's email address using verification token
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: token
+    required: true
+    schema:
+      type: string
+      example: some-verification-token
+responses:
+  '200':
+    description: User has been verifies
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
