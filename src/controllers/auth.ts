@@ -41,15 +41,15 @@ export const verifyController = async (req: Request, res: Response) => {
 };
 
 export const signinController = async (req: Request, res: Response) => {
-  const session = await authServices.signin(req.body);
-
-  setupSession(res, session);
+  const response = await authServices.signin(req.body);
+  setupSession(res, response.session);
 
   res.json({
     status: 200,
     message: "User has been successfully signed in",
     data: {
-      accessToken: session.accessToken,
+      username: response.username,
+      accessToken: response.session.accessToken,
     },
   });
 };

@@ -89,11 +89,48 @@ export const signin = async ({ email, password }: UserType) => {
   //   await SessionCollection.deleteOne({ userId: user._id });
 
   const newSession = await createSession(user._id.toString());
-  return SessionCollection.create({
+ const createdSession = await SessionCollection.create({
     userId: user._id,
     ...newSession,
   });
+  //createdSession is not an object, it's a Mongoose document so to turn it to object .toObject() should be used or .toJSON()
+  return {
+    username: user.username,
+    session: createdSession.toObject()
+  }
 };
+
+//  {
+//   username: 'Alex7',
+//   '$__': InternalCache {
+//     activePaths: ctor {
+//       paths: [Object],
+//       states: [Object],
+//       map: [Function (anonymous)]
+//     },
+//     op: null,
+//     saving: null,
+//     '$versionError': null,
+//     saveOptions: null,
+//     validating: null,
+//     validationError: undefined,
+//     cachedRequired: {},
+//     backup: { activePaths: [Object], validationError: null, errors: undefined },
+//     inserting: true,
+//     savedState: {}
+//   },
+//   _doc: {
+//     userId: new ObjectId('695bfd2fef7e61535ec0bd9e'),
+//     accessToken: 'l5MjvnGKTyqbhJ9SUIB+Bl+3g16ZPi/kSfFhs18y',
+//     refreshToken: 'DDix/O4Ycs1PukFbTXUkodyAeOhGpRx7JOKurm9F',
+//     accessTokenValidUntil: 2026-01-20T06:21:51.996Z,
+//     refreshTokenValidUntil: 2026-01-27T06:06:51.996Z,
+//     _id: new ObjectId('696f1b7b1c9d92f8eae1e328'),
+//     createdAt: 2026-01-20T06:06:52.007Z,
+//     updatedAt: 2026-01-20T06:06:52.007Z
+//   },
+//   '$errors': undefined,
+//   '$isNew': false
 
 //this request is for authenticate.ts middleware to check if token is valid and exists in one of the sessions
 export const findSession = (filter: { accessToken: string }) =>
