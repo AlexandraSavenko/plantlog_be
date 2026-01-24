@@ -10,7 +10,8 @@ import { swaggerDocs } from "./middlewares/swaggerDocs";
 
 export const startServer = () => {
 const app = express();
-app.use(cors())
+app.use(cors({origin: ["http://localhost:5173"], credentials: true}))
+// app.use(cors())
 
 //it's a buildin function to convert req.body to json, first it checks if there is content-type in Headers and then if it's json
 //and puts json to req.body, but if instead of json it's form-data it bypasses the request
