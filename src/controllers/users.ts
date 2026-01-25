@@ -1,0 +1,18 @@
+import { Request, Response, NextFunction } from "express";
+import { getUserInfo } from "../services/users";
+
+export const getUserController = async (req: Request, res: Response) => {
+  const { _id } = req.user;
+  const user = await getUserInfo(_id);
+console.log("user controller",user)
+  res.json({
+    status: 200,
+    message: "Successfully found info about the current user",
+    data: {
+        userId: user?._id,
+        userName: user?.username,
+        favoritesPlants: user?.favoritePlants,
+        authProvider: user?.authProvider
+    }
+  })
+};

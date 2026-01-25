@@ -7,6 +7,7 @@ import {notFoundHandler} from "./middlewares/notFoundHandler"
 import { errorHandler } from "./middlewares/errorHandler";
 import cookieParser from "cookie-parser";
 import { swaggerDocs } from "./middlewares/swaggerDocs";
+import userRouter from "./routers/users";
 
 export const startServer = () => {
 const app = express();
@@ -28,6 +29,7 @@ app.use(express.static("uploads"))
 
 app.use("/plants", plantsRouter);
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 app.use("/api-docs", swaggerDocs())
 app.use(notFoundHandler)
 

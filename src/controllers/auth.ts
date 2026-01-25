@@ -21,11 +21,10 @@ const setupSession = (res: Response, session: Session) => {
 };
 
 export const signupController = async (req: Request, res: Response) => {
-  const data = await authServices.signup(req.body);
+  await authServices.signup(req.body);
   res.status(201).json({
     status: 201,
     message: "User has been successfully signed up",
-    data: data.username,
   });
 };
 
@@ -43,12 +42,10 @@ export const verifyController = async (req: Request, res: Response) => {
 export const signinController = async (req: Request, res: Response) => {
   const response = await authServices.signin(req.body);
   setupSession(res, response.session);
-
   res.json({
     status: 200,
     message: "User has been successfully signed in",
     data: {
-      username: response.username,
       accessToken: response.session.accessToken,
     },
   });
