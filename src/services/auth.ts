@@ -57,7 +57,12 @@ export const signup = async (payload: UserType) => {
 
   const jwtToken = createJWT(email);
   const verifyEmail = await createEmail(email, {link: `${appDomain}/auth/verify?token=${jwtToken}`}, "verify-email.html");
-  await sendEmail(verifyEmail);
+  try {
+    await sendEmail(verifyEmail);
+  } catch (error) {
+    console.log("Email send failed", error)
+  }
+  
   return newUser;
 };
 
