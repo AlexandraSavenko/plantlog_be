@@ -57,11 +57,7 @@ export const signup = async (payload: UserType) => {
 
   const jwtToken = createJWT(email);
   const verifyEmail = await createEmail(email, {link: `${appDomain}/auth/verify?token=${jwtToken}`}, "verify-email.html");
-  try {
     await sendEmail(verifyEmail);
-  } catch (error) {
-    console.log("Email send failed", error)
-  }
   
   return newUser;
 };
@@ -203,6 +199,7 @@ const hashPassword = await bcrypt.hash(newPassword, 10);
 
 
 export const signInOrUpWithGoogle = async (code: string) => {
+  console.log("code in service", code)
   const signTicket = await validateCode(code);
   //information in ticket is hidden so it should be decoded
   const payload = signTicket.getPayload();

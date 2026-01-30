@@ -21,9 +21,10 @@ const getGoogleOAuthClient = async () => {
   const googleOAuthClient = new OAuth2Client({
     clientId,
     clientSecret,
-    redirectUri: oauthConfig.web.redirect_uris[0],
+    // redirectUri: oauthConfig.web.redirect_uris[0],
+    redirectUri: "postmessage"
   });
-
+//there could be two ways to get google code, for backend request redirectUri should be oauthConfig, while for front-end request it should be "postmessage"
   return googleOAuthClient;
 };
 
@@ -37,15 +38,16 @@ export const generateAuthUrl = async () => {
 };
 
 export const validateCode = async (code: string) => {
-    // console.log("Code", code)
+    console.log("Code", code)
   const client = await getGoogleOAuthClient();
 //   console.log("Client", client)
   let response;
   try {
    response = await client.getToken(code);
-//   console.log("Response", response) 
+  console.log("Response on code", response) 
 
   } catch (error) {
+    console.log("error on code", error)
     throw error;
   }
   
