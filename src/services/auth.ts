@@ -44,6 +44,7 @@ const createSession = async (userId: string) => {
 };
 export const signup = async (payload: UserType) => {
   const { email, password } = payload;
+  
   const user = await findUserByEmail({ email });
   if (user) {
     throw createHttpError(409, "Email is already in use");

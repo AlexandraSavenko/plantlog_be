@@ -38,13 +38,11 @@ export const generateAuthUrl = async () => {
 };
 
 export const validateCode = async (code: string) => {
-    console.log("Code", code)
   const client = await getGoogleOAuthClient();
 //   console.log("Client", client)
   let response;
   try {
-   response = await client.getToken(code);
-  console.log("Response on code", response) 
+   response = await client.getToken(code); 
 
   } catch (error) {
     console.log("error on code", error)

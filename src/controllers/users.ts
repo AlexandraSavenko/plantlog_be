@@ -9,8 +9,8 @@ export const getUserController = async (req: Request, res: Response) => {
     message: "Successfully found info about the current user",
     data: {
         userId: user?._id,
-        userName: user?.username,
-        favoritesPlants: user?.favoritePlants,
+        username: user?.username,
+        favoritePlants: user?.favoritePlants,
         authProvider: user?.authProvider
     }
   })
