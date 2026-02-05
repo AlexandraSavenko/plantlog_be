@@ -28,6 +28,14 @@ export const getPlantsController = async (req: Request, res: Response) => {
   });
 };
 
+export const getPlantNameList = async (req: Request, res: Response) => {
+const data = await plantsServises.getNameList();
+res.status(200).json({
+  status: 200,
+  message: "Success",
+  data
+})
+}
 export const getPlantByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
 

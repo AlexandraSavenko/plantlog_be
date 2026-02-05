@@ -19,6 +19,7 @@ const plantsRouter = Router()
 
 plantsRouter.get("/", ctrlWrapper(plantsControllers.getPlantsController))
 
+plantsRouter.get("/namelist", ctrlWrapper(plantsControllers.getPlantNameList))
 //it's vital to keep /own before /:id otherwise it would treat /own --> /:id for it reads from top to bottom
 plantsRouter.get("/own", authenticate, ctrlWrapper(plantsControllers.getPlantsController))
 plantsRouter.get("/favorites", authenticate, ctrlWrapper(plantsControllers.getUserFavorites))
