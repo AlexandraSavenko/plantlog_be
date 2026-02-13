@@ -5,10 +5,18 @@ import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
 const validateBody = (schema: Joi.Schema) => {
   const func = (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body)
     //by default joi breaks check after finding the first mistake, so abortEarly: false tells it to check all field at once
     const {error} = schema.validate(req.body, {abortEarly: false})
     if(error){
-        return next(createHttpError(400, error.message))
+      console.log(error)
+        return next(createHttpError(400, {
+      message: "Validation error",
+      details: error.details.map(d => ({
+        message: d.message,
+        field: d.path.join("."),
+      })),
+    }))
     }
     next()
 }

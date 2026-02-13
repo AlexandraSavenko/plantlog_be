@@ -62,7 +62,7 @@ export const addPlantController = async (req: Request, res: Response) => {
     throw createHttpError(401, "User not authenticated");
   }
   // console.log("AddPlantController", req.file)
-  
+  console.log(req.body)
   let photo = null;
   if(req.file){
     if(enableCloudinary === "true"){

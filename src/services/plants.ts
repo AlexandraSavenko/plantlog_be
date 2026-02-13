@@ -24,7 +24,7 @@ export const getPlants = async ({
   const data = await query;
   //Mongoose can't run the same request twise because an error will happen: Query was already executed: plants.countDocuments
   //so to count total items with filters we need to create a new request and merge query in it.
-  const totalItems = await PlantCollection.find().merge(query).countDocuments();
+  const totalItems = await PlantCollection.countDocuments();
   const paginationData = calculatePaginationData({ page, perPage, totalItems });
   return { data, ...paginationData };
 };
